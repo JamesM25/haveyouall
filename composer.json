@@ -3,7 +3,10 @@
   "authors": [
     {
       "name": "James Motherwell",
-      "email": "motherwell.james@student.greenriver.edu"
+      "email": "motherwell.james@student.greenriver.edu",
+
+      "name": "Michael Onishchenko",
+      "email": "onishchenko.michael@student.greenriver.edu"
     }
   ],
   "require": {
