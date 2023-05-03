@@ -4,9 +4,14 @@
     {
       "name": "James Motherwell",
       "email": "motherwell.james@student.greenriver.edu",
-
+    },
+    {
       "name": "Michael Onishchenko",
       "email": "onishchenko.michael@student.greenriver.edu"
+    },
+    {
+    "name": "Darius Minus",
+    "email": "minus.darius@student.greenriver.edu"
     }
   ],
   "require": {
