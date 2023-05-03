@@ -1,0 +1,12 @@
+{
+  "name": "jmotherwell/328/haveyouall",
+  "authors": [
+    {
+      "name": "James Motherwell",
+      "email": "motherwell.james@student.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
