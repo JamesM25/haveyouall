@@ -17,5 +17,5 @@
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteRule ^views/ = [F,L]
+    RewriteRule ^view/ = [F,L]
 </IfModule>
