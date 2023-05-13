@@ -3,7 +3,7 @@
  *  Team Terminator HaveYouAll
  *  @version 1.0
  * Date: 5/8/2023
- * This is a HTML file for group project. Our group is doing a forumn based project.
+ * This is a HTML file for group project. Our group is doing a forum based project.
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--  import bootstrap files and css file -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="328/haveyouall/styles/styles.css">
 
     <!-- TODO: The current icon is a placeholder. We should find something better eventually. -->
@@ -21,30 +22,37 @@
     <title>HaveYouAll - Home</title>
 </head>
 <body>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <div class="container">
     <div class="row">
-
         <div class="col-lg-9 mb-3">
             <div class="row text-left mb-5">
                 <div class="col-lg-6 mb-3 mb-sm-0">
                     <div class="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50">
-                        <select class="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select">
-                            <option> Categories </option>
-                            <option> Action </option>
-                            <option> Adventure </option>
-                            <option> FPS </option>
-                        </select>
+                        <!-- TODO:
+                            This is a hack to prevent PHPStorm from displaying warnings about the select element
+                            missing a label. Right now, the first option is used to identify what the dropdown does,
+                            but this should be improved in the future. -->
+                        <label class="w-100">
+                            <select class="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select">
+                                <option> Categories </option>
+                                <option> Action </option>
+                                <option> Adventure </option>
+                                <option> FPS </option>
+                            </select>
+                        </label>
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-right">
                     <div class="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50">
-                        <select class="form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50" data-toggle="select">
-                            <option> Filter by </option>
-                            <option> Votes </option>
-                            <option> Reply's </option>
-                            <option> Views </option>
-                        </select>
+                        <!-- TODO: Same as the previous select -->
+                        <label class="w-100">
+                            <select class="form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50" data-toggle="select">
+                                <option> Filter by </option>
+                                <option> Votes </option>
+                                <option> Replies </option>
+                                <option> Views </option>
+                            </select>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -57,7 +65,7 @@
                             <a href="#" class="text-primary">Call of Duty</a>
                         </h5> <img src = "images/place.jpg"  width="200"
                                    height="200" alt="Placeholder Pic">
-                        <p class="text-sm">Posted by: <a class="text-black" href="#">20 minutes</a> ago by</span> <a class="text-black" href="#">Michael</a></p>
+                        <p class="text-sm">Posted <a class="text-black" href="#">20 minutes ago</a> by <a class="text-black" href="#">Michael</a></p>
 
                         <div class="text"><p> Keywords: </p></div>
                     </div>
@@ -77,7 +85,7 @@
                         <h5>
                             <a href="#" class="text-primary">DeadSpace</a>
                         </h5>
-                        <p class="text-sm">Posted by: <a class="text-black" href="#">1 hour ago</a> ago by</span> <a class="text-black" href="#">James</a></p>
+                        <p class="text-sm">Posted <a class="text-black" href="#">1 hour ago</a> by <a class="text-black" href="#">James</a></p>
                         <div class="text"><p> Keywords: </p></div>
                     </div>
                     <div class="col-md-4 op-7">
@@ -96,7 +104,7 @@
                         <h5>
                             <a href="#" class="text-primary">OverWatch</a>
                         </h5>
-                        <p class="text-sm">Posted by: <a class="text-black" href="#">2 hours ago</a> ago by</span> <a class="text-black" href="#">Darius</a></p>
+                        <p class="text-sm">Posted <a class="text-black" href="#">2 hours ago</a> by <a class="text-black" href="#">Darius</a></p>
                         <div class="text"><p> Keywords: </p></div>
                     </div>
                     <div class="col-md-4 op-7">
@@ -114,7 +122,7 @@
                         <h5>
                             <a href="#" class="text-primary">Pokemon</a>
                         </h5>
-                        <p class="text-sm">Posted by: <a class="text-black" href="#">2 days ago</a> ago by</span> <a class="text-black" href="#">Stuart</a></p>
+                        <p class="text-sm">Posted <a class="text-black" href="#">2 days ago</a> by <a class="text-black" href="#">Stuart</a></p>
                         <div class="text"><p> Keywords: </p></div>
                     </div>
                     <div class="col-md-4 op-7">
@@ -132,7 +140,7 @@
                         <h5>
                             <a href="#" class="text-primary"> The Legend of Zelda</a>
                         </h5>
-                        <p class="text-sm">Posted by: <a class="text-black" href="#">1 week ago</a> ago by</span> <a class="text-black" href="#">marcus</a></p>
+                        <p class="text-sm">Posted <a class="text-black" href="#">1 week ago</a> by <a class="text-black" href="#">marcus</a></p>
                         <div class="text"><p> Keywords: </p></div>
                     </div>
                     <div class="col-md-4 op-7">
@@ -148,7 +156,6 @@
 
 
         <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
-            <div style="visibility: hidden; display: none; width: 285px; height: 801px; margin: 0px; float: none; position: static; inset: 85px auto auto;"></div>
             <a class="btn btn-lg btn-block btn-success " href="#">Ask Question</a>
             <a class="btn btn-lg btn-block btn-success" href="#">Login / Sign Up</a>
 
@@ -161,28 +168,28 @@
                     <h6 class="text-primary text-sm">
                         <a href="#" class="text-primary">Sample Text </a>
                     </h6>
-                    <p class="mb-0 text-sm"> Posted <a class="text-black" href="#">39 minutes</a> ago by <a class="text-black" href="#">gigglypig</a></p>
+                    <p class="mb-0 text-sm"> Posted <a class="text-black" href="#">39 minutes ago</a> by <a class="text-black" href="#">gigglypig</a></p>
                 </div>
                 <hr class="m-0">
                 <div class="pos-relative px-3 py-3">
                     <h6 class="text-primary text-sm">
                         <a href="#" class="text-primary">Sample Text </a>
                     </h6>
-                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">58 minutes</a> ago by <a class="text-black" href="#">happyunicorn</a></p>
+                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">58 minutes ago</a> by <a class="text-black" href="#">happyunicorn</a></p>
                 </div>
                 <hr class="m-0">
                 <div class="pos-relative px-3 py-3">
                     <h6 class="text-primary text-sm">
                         <a href="#" class="text-primary">Sample Text </a>
                     </h6>
-                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">48 minutes</a> ago by <a class="text-black" href="#">extraordinary</a></p>
+                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">48 minutes ago</a> by <a class="text-black" href="#">extraordinary</a></p>
                 </div>
                 <hr class="m-0">
                 <div class="pos-relative px-3 py-3">
                     <h6 class="text-primary text-sm">
                         <a href="#" class="text-primary">Sample Text </a>
                     </h6>
-                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">38 minutes</a> ago by <a class="text-black" href="#">luckygarner</a></p>
+                    <p class="mb-0 text-sm">Posted <a class="text-black" href="#">38 minutes ago</a> by <a class="text-black" href="#">luckygarner</a></p>
                 </div>
                 <hr class="m-0">
             </div>
@@ -199,12 +206,9 @@
                     <div class="col-sm-6 flex-ew text-center py-3 border-right "> <a class="d-block lead font-weight-bold" href="#">162</a> Members </div>
                     <div class="col-sm-6 flex-ew text-center py-3 "> <a class="d-block lead font-weight-bold" href="#">luckygarner</a> Newest Member </div>
                 </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 </body>
 </html>
