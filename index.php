@@ -61,6 +61,10 @@ $f3->route('GET|POST /signup', function ($f3) {
         $password = readFormInput($f3, "password");
         $passwordConfirm = readFormInput($f3, "passwordConfirm");
 
+        if ($passwordConfirm !== $password) {
+            $f3->set("errors['passwordMismatch']", "Passwords do not match");
+        }
+
         if (empty($f3->get('errors'))) {
 
         }
