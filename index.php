@@ -13,6 +13,7 @@ error_reporting(E_ALL);
 require_once "vendor/autoload.php";
 
 require_once 'model/db.php';
+require_once 'model/validation.php';
 
 // Create an F3 (Fat-Free Framework) object
 $f3 = Base::instance();
@@ -37,9 +38,41 @@ $f3->route('GET /login', function ($f3) {
     echo $view->render('view/login.html');
 });
 
-$f3->route('GET /signup', function ($f3) {
+function readFormInput($f3, $name, $validate = "", $default = "")
+{
+    $value = $_POST[$name] ?? $default;
+
+    if ($validate != "" && !$validate($value)) {
+        $f3->set("errors['$name']", "Invalid $name");
+    }
+
+    return $value;
+}
+
+$f3->route('GET|POST /signup', function ($f3) {
+    $email = "";
+    $name = "";
+    $password = "";
+    $passwordConfirm = "";
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = readFormInput($f3, "email", "validEmail");
+        $name = readFormInput($f3, "name");
+        $password = readFormInput($f3, "password");
+        $passwordConfirm = readFormInput($f3, "passwordConfirm");
+
+        if (empty($f3->get('errors'))) {
+
+        }
+    }
+
     // Set the icon path
     $f3->set('favicon', ICON_PATH);
+
+    $f3->set('userEmail', $email);
+    $f3->set('userName', $name);
+    $f3->set('userPassword', $password);
+    $f3->set('userPasswordConfirm', $passwordConfirm);
 
     $view = new Template();
     echo $view->render('view/signup.html');

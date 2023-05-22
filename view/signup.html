@@ -20,26 +20,29 @@
 </head>
 <body>
 <div class="container">
-    <form class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
+    <form action="#" method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
         <h1>Sign up</h1>
         <div class="form-floating my-1">
-            <input id="email" type="email" class="form-control" name="email" placeholder="Email">
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ @userEmail }}">
             <label for="email">Email</label>
         </div>
         <div class="form-floating my-1">
-          <input id="username" type="text" class="form-control" name="username" placeholder="Username">
+          <input id="username" type="text" class="form-control" name="username" placeholder="Username" value="{{ @userName }}">
           <label for="username">Username</label>
         </div>
         <div class="form-floating my-1">
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password" value="{{ @userPassword }}">
             <label for="password">Password</label>
         </div>
         <div class="form-floating my-1">
-          <input id="passwordConfirm" type="password" class="form-control" name="passwordConfirm" placeholder="Confirm Password">
+          <input id="passwordConfirm" type="password" class="form-control" name="passwordConfirm" placeholder="Confirm Password" value="{{ @userPasswordConfirm }}">
           <label for="passwordConfirm">Confirm Password</label>
         </div>
 
+        <include href="view/form_errors.html">
+
         <button class="btn btn-primary my-1 w-50">Submit</button>
+
         <p>Already have an account? Click <a href="login">here</a> to sign in!</p>
     </form>
 </div>

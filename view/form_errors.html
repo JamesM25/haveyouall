@@ -1,0 +1,7 @@
+<check if="{{ isset(@errors) }}">
+<div class="err">
+<repeat group="{{ @errors }}" value="{{ @error }}">
+  <p>{{ @error }}</p>
+</repeat>
+</div>
+</check>
