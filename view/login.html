@@ -20,16 +20,20 @@
 </head>
 <body>
     <div class="container">
-        <form class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
+        <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
             <h1>Sign in</h1>
             <div class="form-floating my-1">
-                <input id="username" type="text" class="form-control" name="username" placeholder="Username">
-                <label for="username">Username</label>
+                <input id="email" type="text" class="form-control" name="email" placeholder="Email" value="{{ @userEmail }}">
+                <label for="email">Email</label>
             </div>
             <div class="form-floating my-1">
-                <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+                <input id="password" type="password" class="form-control" name="password" placeholder="Password" value="{{ @userPassword }}">
                 <label for="password">Password</label>
             </div>
+
+            <check if="{{ isset(@errors['login']) }}">
+                <p>{{ @errors['login'] }}</p>
+            </check>
 
             <button class="btn btn-primary my-1 w-50">Submit</button>
             <p>Don't have an account? Click <a href="signup">here</a> to sign up!</p>
