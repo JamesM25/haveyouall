@@ -18,7 +18,6 @@ class Database
         if (self::$_db === null) {
             try {
                 self::$_db = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-                // echo 'Connected to database!';
             }
             catch(PDOException $e) {
                 echo $e->getMessage();
