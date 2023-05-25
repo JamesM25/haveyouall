@@ -1,0 +1,32 @@
+
+<!--
+ *  Team Terminator HaveYouAll
+ *  @version 1.0
+ * Date: 5/8/2023
+ * This is a HTML file for group project. Our group is doing a forum based project.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <repeat group="{{ @stylesheets }}" value="{{ @path }}">
+    <link rel="stylesheet" href="{{ @path }}">
+  </repeat>
+
+  <link rel="icon" href="{{ @favicon }}">
+
+  <title>HaveYouAll</title>
+</head>
+<body>
+<include href="view/navbar.html">
+
+<include href="{{ @content }}">
+
+<repeat group="{{ @scripts }}" value="{{ @path }}">
+  <script src="{{ @path }}"></script>
+</repeat>
+</body>
+</html>

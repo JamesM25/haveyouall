@@ -12,4 +12,9 @@ class User
     {
         return $this->_name;
     }
+
+    static function current()
+    {
+        return Database::getUser($GLOBALS['f3']->get("SESSION.user"));
+    }
 }

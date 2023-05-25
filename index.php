@@ -31,32 +31,22 @@ const SCRIPTS = array(
     "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
 );
 
+$f3->set('favicon', ICON_PATH);
+$f3->set('stylesheets', STYLESHEETS);
+$f3->set('scripts', SCRIPTS);
+
+function render($f3, $path) {
+    $f3->set("content", $path);
+    $view = new Template();
+    echo $view->render('view/base.html');
+}
+
 // Default route
 $f3->route('GET /', function ($f3) {
-    // Set the icon path
-    $f3->set('favicon', ICON_PATH);
-
-    $f3->set('stylesheets', STYLESHEETS);
-    $f3->set('scripts', SCRIPTS);
-
-    if (Validation::isLoggedIn($f3)) {
-        $user = Database::getUser($f3->get("SESSION.user"));
-        echo "Welcome back, " . $user->getName();
-    } else {
-        echo "You are not logged in";
-    }
-
-    $view = new Template();
-    echo $view->render('view/home.html');
+    render($f3, "view/home.html");
 });
 
 $f3->route('GET|POST /login', function ($f3) {
-    // Set the icon path
-    $f3->set('favicon', ICON_PATH);
-
-    $f3->set('stylesheets', STYLESHEETS);
-    $f3->set('scripts', SCRIPTS);
-
     $email = "";
     $password = "";
 
@@ -78,15 +68,14 @@ $f3->route('GET|POST /login', function ($f3) {
     $f3->set("userEmail", $email);
     $f3->set("userPassword", $password);
 
-    $view = new Template();
-    echo $view->render('view/login.html');
+    render($f3, "view/login.html");
 });
 
 $f3->route('GET /logout', function ($f3) {
     // Log the user out
     $f3->clear("SESSION.user");
 
-    $f3->reroute('/login');
+    $f3->reroute('/');
 });
 
 function readFormInput($f3, $name, $validate = "", $default = "")
@@ -101,13 +90,6 @@ function readFormInput($f3, $name, $validate = "", $default = "")
 }
 
 $f3->route('GET|POST /signup', function ($f3) {
-
-    // Set the icon path
-    $f3->set('favicon', ICON_PATH);
-
-    $f3->set('stylesheets', STYLESHEETS);
-    $f3->set('scripts', SCRIPTS);
-
     $email = "";
     $name = "";
     $password = "";
@@ -142,16 +124,13 @@ $f3->route('GET|POST /signup', function ($f3) {
     $f3->set('userPassword', $password);
     $f3->set('userPasswordConfirm', $passwordConfirm);
 
-    $view = new Template();
-    echo $view->render('view/signup.html');
+    render($f3, "view/signup.html");
 });
 
 $f3->route('GET|POST /create-post', function($f3) {
-    if (!Validation::isLoggedIn($f3)) {
+    if (!Validation::isLoggedIn()) {
         $f3->reroute('/login');
     }
-
-    $f3->set('favicon', ICON_PATH);
 
     $title = "";
     $body = "";
@@ -164,8 +143,7 @@ $f3->route('GET|POST /create-post', function($f3) {
     $f3->set("userTitle", $title);
     $f3->set("userBody", $body);
 
-    $view = new Template();
-    echo $view->render('view/post_form.html');
+    render($f3, "view/post_form.html");
 });
 
 // Simple route for testing database access

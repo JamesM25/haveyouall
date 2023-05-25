@@ -26,9 +26,16 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ @BASE }}/login">Sign up / Login</a>
-
-        </li> <li class="nav-item">
+          <check if="{{ Validation::isLoggedIn() }}">
+            <true>
+              <a class="nav-link" href="{{ @BASE }}/logout">Log out ({{ User::current()->getName() }})</a>
+            </true>
+            <false>
+              <a class="nav-link" href="{{ @BASE }}/login">Sign up / Login</a>
+            </false>
+          </check>
+        </li>
+      <li class="nav-item">
         <a class="nav-link" href="{{ @BASE }}/create-post">Create a Post</a>
       </li>
 

@@ -1,50 +1,20 @@
-<!--
-    Team Terminator HaveYouAll
-    Date: 5/12/2023
-    File name: view/login.html
+<div class="container">
+    <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
+        <h1>Sign in</h1>
+        <div class="form-floating my-1">
+            <input id="email" type="text" class="form-control" name="email" placeholder="Email" value="{{ @userEmail }}">
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating my-1">
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password" value="{{ @userPassword }}">
+            <label for="password">Password</label>
+        </div>
 
-    This file is used for the login page.
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <check if="{{ isset(@errors['login']) }}">
+            <p>{{ @errors['login'] }}</p>
+        </check>
 
-    <!-- Bootstrap -->
-    <repeat group="{{ @stylesheets }}" value="{{ @path }}">
-        <link rel="stylesheet" href="{{ @path }}">
-    </repeat>
-
-    <repeat group="{{ @scripts }}" value="{{ @path }}">
-        <script src="{{ @path }}"></script>
-    </repeat>
-
-    <link rel="icon" href="{{ @favicon }}">
-
-    <title>HaveYouAll - Login</title>
-</head>
-<body>
-<include href="view/navbar.html">
-    <div class="container">
-        <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
-            <h1>Sign in</h1>
-            <div class="form-floating my-1">
-                <input id="email" type="text" class="form-control" name="email" placeholder="Email" value="{{ @userEmail }}">
-                <label for="email">Email</label>
-            </div>
-            <div class="form-floating my-1">
-                <input id="password" type="password" class="form-control" name="password" placeholder="Password" value="{{ @userPassword }}">
-                <label for="password">Password</label>
-            </div>
-
-            <check if="{{ isset(@errors['login']) }}">
-                <p>{{ @errors['login'] }}</p>
-            </check>
-
-            <button class="btn btn-primary my-1 w-50">Submit</button>
-            <p>Don't have an account? Click <a href="signup">here</a> to sign up!</p>
-        </form>
-    </div>
-</body>
-</html>
+        <button class="btn btn-primary my-1 w-50">Submit</button>
+        <p>Don't have an account? Click <a href="signup">here</a> to sign up!</p>
+    </form>
+</div>

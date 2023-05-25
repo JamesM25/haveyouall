@@ -21,8 +21,8 @@ class Validation
         return Database::checkCredentials($email, $password);
     }
 
-    static function isLoggedIn($f3)
+    static function isLoggedIn()
     {
-        return $f3->exists("SESSION.user");
+        return $GLOBALS['f3']->exists("SESSION.user");
     }
 }
