@@ -3,7 +3,13 @@ body{
      margin-top:20px;
      background:#eee;
      color: #708090;
+     height: 500px;
      }
+#body {
+    height: 300px;
+
+}
+
 .icon-1x {
     font-size: 24px !important;
 }
@@ -28,7 +34,14 @@ a{
 container {
     margin-top: 40px;
 }
-
 .err {
     color: darkred;
+
+#navbarSupportedContent {
+    margin-right: 40px;
+
+}
+.nav-item {
+    margin-left:15px;
+    margin-right:15px;
 }
