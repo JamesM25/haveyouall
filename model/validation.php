@@ -30,4 +30,9 @@ class Validation
     {
         return $GLOBALS['f3']->exists("SESSION.user");
     }
+
+    static function isAdmin()
+    {
+        return self::isLoggedIn() && get_class(User::current()) === "Admin";
+    }
 }

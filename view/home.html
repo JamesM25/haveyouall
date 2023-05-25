@@ -33,11 +33,23 @@
                 </div>
             </div>
 
+            <check if="{{ count(@posts) > 0 }}">
+                <true>
+                    <repeat group="{{ @posts }}" key=" {{ @id }}" value=" {{ @post }}">
+                        <h2>
+                            <a href="{{ @BASE }}/post/{{ @id }}">{{ @post->getTitle() }}</a>
+                        </h2>
+                    </repeat>
+                </true>
+                <false>
+                    <h1>There are no posts yet</h1>
+                </false>
+            </check>
+
             <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
                 <div class="row align-items-center">
                     <div class="col-md-8 mb-3 mb-sm-0">
                         <h5>
-
                             <a href="#" class="text-primary">Call of Duty</a>
                         </h5> <img src = "images/place.jpg"  width="200"
                                    height="200" alt="Placeholder Pic">
@@ -135,6 +147,7 @@
             <a class="btn btn-lg btn-block btn-success " href="#">Ask Question</a>
             <a class="btn btn-lg btn-block btn-success" href="login">Login / Sign Up</a>
 
+            <!-- Active Topics -->
             <div class="bg-white mb-3">
                 <h4 class="px-3 py-4 op-5 m-0">
                     Active Topics
@@ -169,6 +182,8 @@
                 </div>
                 <hr class="m-0">
             </div>
+
+            <!-- Stats -->
             <div class="bg-white text-sm">
                 <h4 class="px-3 py-4 op-5 m-0 roboto-bold">
                     Stats

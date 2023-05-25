@@ -147,9 +147,30 @@ class Database
         return count($result) > 0 ? self::postFromRow($result[0]) : null;
     }
 
+    static function getRecentPosts()
+    {
+        $db = self::getDatabase();
+
+        $sql = "SELECT * FROM `Posts` ORDER BY `Date` DESC LIMIT 50";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        $posts = array();
+        foreach ($result as $row) {
+            $posts[$row['ID']] = self::postFromRow($row);
+        }
+
+        return $posts;
+    }
+
     private static function userFromRow($row)
     {
-        return new User($row['ID'], $row['Name']);
+        if ($row['Admin']) {
+            return new Admin($row['ID'], $row['Name']);
+        } else {
+            return new User($row['ID'], $row['Name']);
+        }
     }
     private static function postFromRow($row)
     {

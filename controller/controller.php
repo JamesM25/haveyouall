@@ -28,6 +28,7 @@ class Controller
 
     function home()
     {
+        $this->_f3->set("posts", Database::getRecentPosts());
         $this->render("view/home.html");
     }
 
@@ -139,5 +140,13 @@ class Controller
         $post = Database::getPost($id);
         $this->_f3->set("post", $post);
         $this->render("view/post.html");
+    }
+
+    function admin()
+    {
+        if (!Validation::isAdmin()) {
+            $this->_f3->error(404);
+        }
+        $this->render("view/admin.html");
     }
 }

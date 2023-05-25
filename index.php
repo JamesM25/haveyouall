@@ -62,5 +62,9 @@ $f3->route('GET /post/@id', function($f3, $params) {
     $GLOBALS['con']->post($params['id']);
 });
 
+$f3->route('GET /admin', function () {
+    $GLOBALS['con']->admin();
+});
+
 // Run Fat-Free
 $f3->run();
