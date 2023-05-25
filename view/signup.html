@@ -2,23 +2,34 @@
     <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
         <h1>Sign up</h1>
         <div class="form-floating my-1">
-            <input id="email" type="email" class="form-control" name="email" placeholder="Email" value="{{ @userEmail }}">
+            <input id="email" type="email" class="form-control" name="email" placeholder="Email" required value="{{ @userEmail }}">
             <label for="email">Email</label>
+            <check if="{{ isset(@errors['email']) }}">
+                <div class="err">{{ @errors['email'] }}</div>
+            </check>
         </div>
         <div class="form-floating my-1">
-          <input id="username" type="text" class="form-control" name="name" placeholder="Username" value="{{ @userName }}">
-          <label for="username">Username</label>
+            <input id="username" type="text" class="form-control" name="name" placeholder="Username" required value="{{ @userName }}">
+            <label for="username">Username</label>
+            <check if="{{ isset(@errors['name']) }}">
+                <div class="err">{{ @errors['name'] }}</div>
+            </check>
         </div>
         <div class="form-floating my-1">
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password" value="{{ @userPassword }}">
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password" required value="{{ @userPassword }}">
             <label for="password">Password</label>
+            <check if="{{ isset(@errors['password']) }}">
+                <div class="err">{{ @errors['password'] }}</div>
+            </check>
         </div>
         <div class="form-floating my-1">
-          <input id="passwordConfirm" type="password" class="form-control" name="passwordConfirm" placeholder="Confirm Password" value="{{ @userPasswordConfirm }}">
-          <label for="passwordConfirm">Confirm Password</label>
-        </div>
+            <input id="passwordConfirm" type="password" class="form-control" name="passwordConfirm" required placeholder="Confirm Password" value="{{ @userPasswordConfirm }}">
+            <label for="passwordConfirm">Confirm Password</label>
 
-        <include href="view/form_errors.html">
+            <check if="{{ isset(@errors['passwordMismatch']) }}">
+                <div class="err">{{ @errors['passwordMismatch'] }}</div>
+            </check>
+        </div>
 
         <button class="btn btn-primary my-1 w-50">Submit</button>
 

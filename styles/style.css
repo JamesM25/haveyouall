@@ -28,3 +28,7 @@ a{
 container {
     margin-top: 40px;
 }
+
+.err {
+    color: darkred;
+}

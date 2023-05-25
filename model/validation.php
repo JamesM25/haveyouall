@@ -7,6 +7,11 @@ class Validation
             && !Database::emailUsed($email); // Don't allow multiple accounts to be created with the same email
     }
 
+    static function validName($name)
+    {
+        return !empty($name);
+    }
+
     static function validPostTitle($title)
     {
         return strlen($title) >= 3;

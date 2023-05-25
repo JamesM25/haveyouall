@@ -1,0 +1,12 @@
+<div class="container">
+<check if="{{ isset(@post) }}">
+    <true>
+        <h1>{{ @post->getTitle() }}</h1>
+        <p>{{ @post->getBody() }}</p>
+        <p>Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
+    </true>
+    <false>
+        <h1>Post not found</h1>
+    </false>
+</check>
+</div>
