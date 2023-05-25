@@ -7,6 +7,7 @@
  * Originally we attempted to use /home/../db_haveyouall.php, but the ../ did not work.
  */
 const DB_PATH = '../../../db_haveyouall.php';
+require_once DB_PATH;
 
 class Database
 {
@@ -15,8 +16,13 @@ class Database
     static function getDatabase()
     {
         if (self::$_db === null) {
-            require_once DB_PATH;
-            self::$_db = $cnxn;
+            try {
+                self::$_db = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
+                // echo 'Connected to database!';
+            }
+            catch(PDOException $e) {
+                echo $e->getMessage();
+            }
         }
         return self::$_db;
     }
@@ -25,23 +31,25 @@ class Database
     {
         $db = self::getDatabase();
 
-        $sql = "SELECT * FROM `Users` WHERE Email=?";
+        $sql = "SELECT * FROM `Users` WHERE Email=:email";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("s", $email);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
 
-        return $stmt->get_result()->num_rows > 0;
+        return count($stmt->fetchAll()) > 0;
     }
 
     static function createUser($email, $name, $password)
     {
         $db = self::getDatabase();
 
-        $sql = "INSERT INTO `Users` (`Email`, `Name`, `Password`) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO `Users` (`Email`, `Name`, `Password`) VALUES (:email, :username, :password)";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("sss", $email, $name, $password);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":username", $name, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -49,18 +57,19 @@ class Database
     {
         $db = self::getDatabase();
 
-        $sql = "SELECT * FROM `Users` WHERE ID=?";
+        $sql = "SELECT * FROM `Users` WHERE ID=:id";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $id);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        if ($row == null) {
+        $result = $stmt->fetchAll();
+        if (count($result) == 0) {
             // No account with the provided email
             return null;
         }
+
+        $row = $result[0];
 
         // Put the result into a User object
         return new User($row['Name']);
@@ -70,34 +79,34 @@ class Database
     {
         $db = self::getDatabase();
 
-        $sql = "SELECT `ID` FROM `Users` WHERE `Email`=? AND `Password`=?";
+        $sql = "SELECT `ID` FROM `Users` WHERE `Email`=:email AND `Password`=:password";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("ss", $email, $password);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
         $stmt->execute();
 
-        $result = $stmt->get_result();
+        $result = $stmt->fetchAll();
 
-        return $result->num_rows > 0;
+        return count($result) > 0;
     }
 
     static function getUserIdFromEmail($email)
     {
         $db = self::getDatabase();
 
-        $sql = "SELECT `ID` FROM `Users` WHERE Email=?";
+        $sql = "SELECT `ID` FROM `Users` WHERE Email=:email";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("s", $email);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
 
-        $result = $stmt->get_result();
-        $row = $result->fetch_array();
-        if ($row == null) {
+        $result = $stmt->fetchAll();
+        if (count($result) == 0) {
             // No account with the provided email
             return false;
         }
 
-        return $row[0];
+        return $result[0][0];
     }
 }
