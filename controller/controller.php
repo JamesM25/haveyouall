@@ -1,13 +1,26 @@
 <?php
+
+/**
+ * Implements methods that handle all routes
+ */
 class Controller
 {
     private $_f3;
 
+    /**
+     * Constructs a new Controller object
+     * @param $f3 Prefab The fat-free object
+     */
     function __construct($f3)
     {
         $this->_f3 = $f3;
     }
 
+    /**
+     * Renders the given view page inside of view/base.html
+     * @param $path string Path to a view page
+     * @return void
+     */
     private function render($path)
     {
         $this->_f3->set("content", $path);
@@ -15,6 +28,13 @@ class Controller
         echo $view->render('view/base.html');
     }
 
+    /**
+     * Reads input data from $_POST
+     * @param $name string The name of an input field
+     * @param $validate string A validation function. If left as an empty string, validation will not occur.
+     * @param $default mixed The default value, if the input is not present within $_POST
+     * @return mixed|string The corresponding value from $_POST, or $default if no value was found
+     */
     private function readFormInput($name, $validate = "", $default = "")
     {
         $value = $_POST[$name] ?? $default;
@@ -26,12 +46,20 @@ class Controller
         return $value;
     }
 
+    /**
+     * Renders the home page
+     * @return void
+     */
     function home()
     {
         $this->_f3->set("posts", Database::getRecentPosts());
         $this->render("view/home.html");
     }
 
+    /**
+     * Renders the login page, and handles incoming form data when the user attempts to log into an account.
+     * @return void
+     */
     function login()
     {
         $email = "";
@@ -58,6 +86,10 @@ class Controller
         $this->render("view/login.html");
     }
 
+    /**
+     * Logs the user out, and redirects their browser to the home page
+     * @return void
+     */
     function logout()
     {
         // Log the user out
@@ -66,6 +98,10 @@ class Controller
         $this->_f3->reroute('/');
     }
 
+    /**
+     * Renders the signup page, and handles incoming form data when the user attempts to create an account.
+     * @return void
+     */
     function signup()
     {
         $email = "";
@@ -104,6 +140,11 @@ class Controller
         $this->render("view/signup.html");
     }
 
+    /**
+     * Renders the create a post page, and handles incoming form data when the user attempts to submit a post.
+     * If the user is not logged into an account, they will be redirected to the login page.
+     * @return void
+     */
     function createPost()
     {
         if (!Validation::isLoggedIn()) {
@@ -135,6 +176,11 @@ class Controller
         $this->render("view/post_form.html");
     }
 
+    /**
+     * Renders a post according to the given ID.
+     * @param $id int A post ID
+     * @return void
+     */
     function post($id)
     {
         $post = Database::getPost($id);
@@ -142,6 +188,11 @@ class Controller
         $this->render("view/post.html");
     }
 
+    /**
+     * Renders the administrator dashboard page.
+     * If the user does not have administrator permissions, a 404 error will be displayed.
+     * @return void
+     */
     function admin()
     {
         if (!Validation::isAdmin()) {
