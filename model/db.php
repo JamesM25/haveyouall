@@ -159,14 +159,7 @@ class Database
 
         $stmt->execute();
 
-        // Retrieve the ID of the most recent post
-        $sql = "SELECT `ID` FROM `Posts` ORDER BY `ID` DESC LIMIT 1";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-
-        // Return the ID of the most recent post
-        return $result[0][0];
+        return $db->lastInsertId();
     }
 
     /**
