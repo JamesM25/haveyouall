@@ -9,11 +9,14 @@
 const DB_PATH = '../../../db_haveyouall.php';
 require_once DB_PATH;
 
+/**
+ * This class manages all interactions with the database.
+ */
 class Database
 {
     private static $_db = null;
 
-    static function getDatabase()
+    private static function getDatabase()
     {
         if (self::$_db === null) {
             try {
@@ -26,6 +29,11 @@ class Database
         return self::$_db;
     }
 
+    /**
+     * Checks whether the given email address is assigned to an account
+     * @param $email
+     * @return bool True if an account with the given email address exists
+     */
     static function emailUsed($email)
     {
         $db = self::getDatabase();
@@ -39,6 +47,13 @@ class Database
         return count($stmt->fetchAll()) > 0;
     }
 
+    /**
+     * Creates a new user in the database
+     * @param $email string The user's email
+     * @param $name string The username
+     * @param $password string The user's password
+     * @return void
+     */
     static function createUser($email, $name, $password)
     {
         $db = self::getDatabase();
@@ -52,6 +67,11 @@ class Database
         $stmt->execute();
     }
 
+    /**
+     * Given a user ID, this method returns a user object if the ID is valid. Otherwise, it returns null.
+     * @param $id int A user ID
+     * @return Admin|User|null
+     */
     static function getUser($id)
     {
         $db = self::getDatabase();
@@ -72,6 +92,12 @@ class Database
         return self::userFromRow($result[0]);
     }
 
+    /**
+     * Checks whether the given login credentials are valid
+     * @param $email string an email address
+     * @param $password string a password
+     * @return bool True if the credentials are valid
+     */
     static function checkCredentials($email, $password)
     {
         $db = self::getDatabase();
@@ -88,6 +114,12 @@ class Database
         return count($result) > 0;
     }
 
+    /**
+     * Given an email address, this method returns a corresponding user object.
+     * If the email is not assigned to any users, the method returns false.
+     * @param $email string
+     * @return Admin|false|User
+     */
     static function getUserFromEmail($email)
     {
         $db = self::getDatabase();
@@ -107,6 +139,11 @@ class Database
         return self::userFromRow($result[0]);
     }
 
+    /**
+     * Creates a new post and returns it's ID
+     * @param $post Post The post contents
+     * @return int The ID of the post
+     */
     static function createPost($post)
     {
         $db = self::getDatabase();
@@ -132,6 +169,11 @@ class Database
         return $result[0][0];
     }
 
+    /**
+     * Given a post ID, this method returns the corresponding Post object, or null if the ID is invalid.
+     * @param $id int A post ID
+     * @return Post|null
+     */
     static function getPost($id)
     {
         $db = self::getDatabase();
@@ -146,6 +188,10 @@ class Database
         return count($result) > 0 ? self::postFromRow($result[0]) : null;
     }
 
+    /**
+     * This method returns an array of the most recent posts, containing no more than 50 elements.
+     * @return array
+     */
     static function getRecentPosts()
     {
         $db = self::getDatabase();
