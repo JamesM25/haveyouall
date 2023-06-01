@@ -15,9 +15,17 @@
       <repeat group="{{ @reports }}" value="{{ @report }}">
         <tr>
           <td>
-            <a href="{{ @BASE }}/post/{{ @report->getPost()->getId() }}">
-              {{ @report->getPost()->getTitle() }}
-            </a>
+            <check if="{{ @report->getPost() != null }}">
+              <true>
+                <a href="{{ @BASE }}/post/{{ @report->getPost()->getId() }}">
+                  {{ @report->getPost()->getTitle() }}
+                </a>
+              </true>
+              <false>
+                <em>Unknown</em>
+              </false>
+            </check>
+
           </td>
           <td>{{ @report->getUser()->getName() }}</td>
           <td>{{ @report->getDate() }}</td>

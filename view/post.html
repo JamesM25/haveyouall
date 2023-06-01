@@ -4,7 +4,12 @@
         <h1>{{ @post->getTitle() }}</h1>
         <p>{{ @post->getBody() }}</p>
         <p>Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
+
         <p><a href="{{ @BASE }}/report/{{ @postId }}">Report</a></p>
+
+        <check if="{{ Validation::isAdmin() }}">
+            <p><a href="{{ @BASE }}/remove/{{ @postId }}">Delete</a></p>
+        </check>
     </true>
     <false>
         <h1>Post not found</h1>

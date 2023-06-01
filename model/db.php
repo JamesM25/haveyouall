@@ -185,7 +185,6 @@ class DataLayer
      */
     function getPost($id)
     {
-        // Retrieve the ID of the most recent post
         $sql = "SELECT * FROM `Posts` WHERE `ID`=:id LIMIT 1";
         $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
@@ -193,6 +192,19 @@ class DataLayer
         $result = $stmt->fetchAll();
 
         return count($result) > 0 ? self::postFromRow($result[0]) : null;
+    }
+
+    /**
+     * Removes a post.
+     * @param $id int A post ID
+     * @return void
+     */
+    function removePost($id)
+    {
+        $sql = "DELETE FROM Posts WHERE ID=:id";
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 
     /**

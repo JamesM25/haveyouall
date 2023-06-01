@@ -12,6 +12,6 @@ class Admin extends User
      */
     function removePost($postId)
     {
-
+        $GLOBALS['data']->removePost($postId);
     }
 }

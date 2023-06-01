@@ -222,6 +222,24 @@ class Controller
     }
 
     /**
+     * Removes a post
+     * If the user does not have administrator permissions, a 404 error will be displayed.
+     * @param $id int A post ID
+     * @return void
+     */
+    function removePost($id)
+    {
+        if (!Validation::isAdmin()) {
+            $this->_f3->error(404);
+        }
+
+        User::current()->removePost($id);
+
+        // Reroute to home
+        $this->_f3->reroute('/');
+    }
+
+    /**
      * Renders the administrator dashboard page.
      * If the user does not have administrator permissions, a 404 error will be displayed.
      * @return void
