@@ -1,4 +1,29 @@
 <div class="container">
   <h1>Administrator dashboard</h1>
-  <p>This doesn't do much yet...</p>
+  <hr>
+  <h2>User Reports</h2>
+  <table class="table table-striped table-responsive">
+    <thead>
+    <tr>
+      <th>Post</th>
+      <th>Reporter</th>
+      <th>Report Date</th>
+      <th>User Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+      <repeat group="{{ @reports }}" value="{{ @report }}">
+        <tr>
+          <td>
+            <a href="{{ @BASE }}/post/{{ @report->getPost()->getId() }}">
+              {{ @report->getPost()->getTitle() }}
+            </a>
+          </td>
+          <td>{{ @report->getUser()->getName() }}</td>
+          <td>{{ @report->getDate() }}</td>
+          <td class="break">{{ @report->getText() }}</td>
+        </tr>
+      </repeat>
+    </tbody>
+  </table>
 </div>

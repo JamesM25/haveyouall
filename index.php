@@ -58,6 +58,10 @@ $f3->route('GET|POST /create-post', function() {
     $GLOBALS['con']->createPost();
 });
 
+$f3->route('GET|POST /report/@id', function($f3, $params) {
+    $GLOBALS['con']->reportPost($params['id']);
+});
+
 
 $f3->route('GET /post/@id', function($f3, $params) {
     $GLOBALS['con']->post($params['id']);

@@ -9,6 +9,7 @@ class Post
     private $_title;
     private $_body;
     private $_time;
+    private $_id;
 
     /**
      * Constructs a new Post object
@@ -16,13 +17,15 @@ class Post
      * @param $title string The post title
      * @param $body string The body text
      * @param $time string The post's creation time
+     * @param $id int The post's database ID
      */
-    function __construct($user, $title, $body, $time = "")
+    function __construct($user, $title, $body, $time = "", $id = 0)
     {
         $this->_user = $user;
         $this->_title = $title;
         $this->_body = $body;
         $this->_time = $time;
+        $this->_id = $id;
     }
 
     /**
@@ -55,5 +58,13 @@ class Post
     function getTime()
     {
         return $this->_time;
+    }
+
+    /**
+     * @return int The post's ID in the database. 0 if this has not been initialized yet.
+     */
+    function getId()
+    {
+        return $this->_id;
     }
 }

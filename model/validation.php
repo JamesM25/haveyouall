@@ -58,6 +58,16 @@ class Validation
     }
 
     /**
+     * Checks whether the given report text is valid
+     * @param $report string
+     * @return bool True if the given report text is less than or equal to the maximum length
+     */
+    static function validReport($report)
+    {
+        return strlen($report) <= Report::MAX_LENGTH;
+    }
+
+    /**
      * @return bool True if the user is logged into an account, otherwise false
      */
     static function isLoggedIn()

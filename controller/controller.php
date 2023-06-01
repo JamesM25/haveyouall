@@ -176,6 +176,38 @@ class Controller
         $this->render("view/post_form.html");
     }
 
+    function reportPost($id)
+    {
+        if (!Validation::isLoggedIn()) {
+            $this->_f3->reroute('/login');
+        }
+
+        $db = $GLOBALS['data'];
+
+        $post = $db->getPost($id);
+        $this->_f3->set("post", $post);
+
+        $report = "";
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $report = $this->readFormInput("report", "Validation::validReport");
+
+            if (empty($this->_f3->get("errors"))) {
+                $report = new Report($report, $post, User::current());
+
+                // Add the post to the database
+                $postId = $GLOBALS['data']->createReport($report);
+
+                // Reroute to view the post
+                $this->_f3->reroute("/post/$id");
+            }
+        }
+
+        $this->_f3->set("userReport", $report);
+
+        $this->render("view/report_form.html");
+    }
+
     /**
      * Renders a post according to the given ID.
      * @param $id int A post ID
@@ -185,6 +217,7 @@ class Controller
     {
         $post = $GLOBALS['data']->getPost($id);
         $this->_f3->set("post", $post);
+        $this->_f3->set("postId", $id);
         $this->render("view/post.html");
     }
 
@@ -198,6 +231,8 @@ class Controller
         if (!Validation::isAdmin()) {
             $this->_f3->error(404);
         }
+
+        $this->_f3->set("reports", $GLOBALS['data']->getReports());
         $this->render("view/admin.html");
     }
 }

@@ -4,6 +4,7 @@
         <h1>{{ @post->getTitle() }}</h1>
         <p>{{ @post->getBody() }}</p>
         <p>Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
+        <p><a href="{{ @BASE }}/report/{{ @postId }}">Report</a></p>
     </true>
     <false>
         <h1>Post not found</h1>

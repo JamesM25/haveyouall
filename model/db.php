@@ -140,6 +140,45 @@ class DataLayer
     }
 
     /**
+     * Inserts a new report into the database
+     * @param $report Report
+     * @return void
+     */
+    function createReport($report)
+    {
+        $sql = "INSERT INTO Reports (Post, User, Body) VALUES (:post, :user, :body)";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->bindValue(":post", $report->getPost()->getId());
+        $stmt->bindValue(":user", $report->getUser()->getId());
+        $stmt->bindValue(":body", $report->getText());
+
+        $stmt->execute();
+    }
+
+    /**
+     * @return array The 50 most recent reports
+     */
+    function getReports()
+    {
+        $sql = "SELECT * FROM Reports ORDER BY `Date` DESC LIMIT 50";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+
+        $reports = array();
+        foreach ($result as $row) {
+            $reports[] = $this->reportFromRow($row);
+        }
+
+        return $reports;
+    }
+
+    /**
      * Given a post ID, this method returns the corresponding Post object, or null if the ID is invalid.
      * @param $id int A post ID
      * @return Post|null
@@ -189,6 +228,16 @@ class DataLayer
             $this->getUser($row['User']),
             $row['Title'],
             $row['Body'],
-            $row['Date']);
+            $row['Date'],
+            $row['ID']);
+    }
+    private function reportFromRow($row)
+    {
+        return new Report(
+            $row['Body'],
+            $this->getPost($row['Post']),
+            $this->getUser($row['User']),
+            $row['Date']
+        );
     }
 }

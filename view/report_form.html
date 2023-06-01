@@ -1,0 +1,17 @@
+<div class="container" xmlns="">
+  <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
+
+    <h1>Report post</h1>
+    <p>Reporting <a href="{{ @BASE }}/post/{{ @post->getId() }}">{{ @post->getTitle() }}</a> by {{ @post->getUser()->getName() }}</p>
+
+    <div class="form-floating my-1">
+      <textarea id="report" class="form-control" name="report" placeholder="Reason for report" rows = "6" required maxlength="{{ Report::MAX_LENGTH }}">{{ @userReport }}</textarea>
+      <label for="report">Reason for report</label>
+      <check if="{{ isset(@errors['report']) }}">
+        <div class="err">{{ @errors['report'] }}</div>
+      </check>
+    </div>
+
+    <button class="btn btn-primary my-1 w-50">Submit</button>
+  </form>
+</div>
