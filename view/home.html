@@ -8,6 +8,7 @@
                             This is a hack to prevent PHPStorm from displaying warnings about the select element
                             missing a label. Right now, the first option is used to identify what the dropdown does,
                             but this should be improved in the future. -->
+                        <label class="w-100">
                             <select class="form-control form-control-lg bg-white bg-op-9 text-sm w-lg-50" data-toggle="select">
                                 <option> Categories </option>
                                 <option> Action </option>
@@ -20,6 +21,7 @@
                 <div class="col-lg-6 text-lg-right">
                     <div class="dropdown bootstrap-select form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50">
                         <!-- TODO: Same as the previous select -->
+                        <label class="w-100">
                             <select class="form-control form-control-lg bg-white bg-op-9 ml-auto text-sm w-lg-50" data-toggle="select">
                                 <option> Filter by </option>
                                 <option> Votes </option>
@@ -159,7 +161,8 @@
 
 
         <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
-
+            <a class="btn btn-lg btn-block btn-success " href="#">Ask Question</a>
+            <a class="btn btn-lg btn-block btn-success" href="login">Login / Sign Up</a>
 
             <!-- Active Topics -->
             <div class="bg-white mb-3">
@@ -204,12 +207,12 @@
                 </h4>
                 <hr class="my-0">
                 <div class="row text-center d-flex flex-row op-7 mx-0">
-                    <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right"> <a class="d-block lead font-weight-bold" href="#">33</a> Topics </div>
-                    <div class="col-sm-6 col flex-ew text-center py-3 border-bottom"> <a class="d-block lead font-weight-bold" href="#">998</a> Posts </div>
+                    <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right"> <a class="d-block lead font-weight-bold" href="#">{{ @stats->getTopics() }}</a> Topics </div>
+                    <div class="col-sm-6 col flex-ew text-center py-3 border-bottom"> <a class="d-block lead font-weight-bold" href="#">{{ @stats->getPosts() }}</a> Posts </div>
                 </div>
                 <div class="row d-flex flex-row op-7">
-                    <div class="col-sm-6 flex-ew text-center py-3 border-right "> <a class="d-block lead font-weight-bold" href="#">162</a> Members </div>
-                    <div class="col-sm-6 flex-ew text-center py-3 "> <a class="d-block lead font-weight-bold" href="#">luckygarner</a> Newest Member </div>
+                    <div class="col-sm-6 flex-ew text-center py-3 border-right "> <a class="d-block lead font-weight-bold" href="#">{{ @stats->getMembers() }}</a> Members </div>
+                    <div class="col-sm-6 flex-ew text-center py-3 "> <a class="d-block lead font-weight-bold" href="#">{{ @stats->getNewestUserName() }}</a> Newest Member </div>
                 </div>
             </div>
         </div>

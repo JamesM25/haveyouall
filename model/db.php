@@ -226,6 +226,24 @@ class DataLayer
         return $posts;
     }
 
+    /**
+     * @return Stats
+     */
+    function getStats()
+    {
+        $sql = "SELECT
+            (SELECT COUNT(*) FROM Posts) AS topics,
+            (0) AS posts,
+            (SELECT COUNT(*) FROM Users) AS members,
+            (SELECT ID FROM Users ORDER BY ID DESC LIMIT 1) AS newestUser";
+
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        return new Stats($result['topics'], $result['posts'], $result['members'], $this->getUser($result['newestUser']));
+    }
+
     private static function userFromRow($row)
     {
         if ($row['Admin']) {
