@@ -10,6 +10,7 @@ class Post
     private $_body;
     private $_time;
     private $_id;
+    private $_replyCount;
 
     /**
      * Constructs a new Post object
@@ -18,14 +19,16 @@ class Post
      * @param $body string The body text
      * @param $time string The post's creation time
      * @param $id int The post's database ID
+     * @param $replyCount int The number of replies
      */
-    function __construct($user, $title, $body, $time = "", $id = 0)
+    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0)
     {
         $this->_user = $user;
         $this->_title = $title;
         $this->_body = $body;
         $this->_time = $time;
         $this->_id = $id;
+        $this->_replyCount = $replyCount;
     }
 
     /**
@@ -66,5 +69,13 @@ class Post
     function getId()
     {
         return $this->_id;
+    }
+
+    /**
+     * @return int The number of replies
+     */
+    function getReplyCount()
+    {
+        return $this->_replyCount;
     }
 }

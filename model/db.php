@@ -140,6 +140,24 @@ class DataLayer
     }
 
     /**
+     * @param $postId int A post ID
+     * @param $reply Reply
+     * @return void
+     */
+    function createReply($postId, $reply)
+    {
+        $sql = "INSERT INTO Replies (Thread, User, Body) VALUES (:thread, :user, :body)";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->bindValue(":thread", $postId, PDO::PARAM_INT);
+        $stmt->bindValue(":user", $reply->getUser()->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(":body", $reply->getText());
+
+        $stmt->execute();
+    }
+
+    /**
      * Inserts a new report into the database
      * @param $report Report
      * @return void
@@ -227,13 +245,50 @@ class DataLayer
     }
 
     /**
+     * @param $postId int
+     * @return array Array of replies
+     */
+    function getReplies($postId)
+    {
+        $sql = "SELECT Replies.ID, Replies.Thread, Replies.User, Replies.Body, Replies.Date FROM Replies JOIN Posts ON Replies.Thread=Posts.ID WHERE Posts.ID=:id ORDER BY Replies.Date DESC";
+
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindValue(":id", $postId);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        $replies = array();
+        foreach ($result as $row) {
+            $replies[$row['ID']] = $this->replyFromRow($row);
+        }
+
+        return $replies;
+    }
+
+    /**
+     * @param $postId int
+     * @return int Number of replies
+     */
+    function getReplyCount($postId)
+    {
+        $sql = "SELECT COUNT(*) FROM Replies JOIN Posts ON Replies.Thread=Posts.ID WHERE Posts.ID=:id ORDER BY Replies.Date DESC";
+
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindValue(":id", $postId);
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        return $result[0];
+    }
+
+    /**
      * @return Stats
      */
     function getStats()
     {
         $sql = "SELECT
             (SELECT COUNT(*) FROM Posts) AS topics,
-            (0) AS posts,
+            (SELECT COUNT(*) FROM Posts)+(SELECT COUNT(*) FROM Replies) AS posts,
             (SELECT COUNT(*) FROM Users) AS members,
             (SELECT ID FROM Users ORDER BY ID DESC LIMIT 1) AS newestUser";
 
@@ -259,7 +314,16 @@ class DataLayer
             $row['Title'],
             $row['Body'],
             $row['Date'],
-            $row['ID']);
+            $row['ID'],
+            $this->getReplyCount($row['ID']));
+    }
+    private function replyFromRow($row)
+    {
+        return new Reply(
+            $this->getUser($row['User']),
+            $row['Body'],
+            $row['Date']
+        );
     }
     private function reportFromRow($row)
     {

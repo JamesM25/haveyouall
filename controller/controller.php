@@ -217,7 +217,28 @@ class Controller
     function post($id)
     {
         $post = $GLOBALS['data']->getPost($id);
+
+        $reply = "";
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            if (!Validation::isLoggedIn()) {
+                $this->_f3->reroute('/login');
+            }
+
+            $reply = $this->readFormInput("reply");
+
+            $postReply = new Reply(User::current(), $reply);
+
+            $GLOBALS['data']->createReply($id, $postReply);
+
+            // Clear the textarea value
+            $reply = "";
+        }
+
+        $this->_f3->set("userReply", $reply);
+
         $this->_f3->set("post", $post);
+        $this->_f3->set("replies", $GLOBALS['data']->getReplies($post->getId()));
         $this->_f3->set("postId", $id);
         $this->render("view/post.html");
     }

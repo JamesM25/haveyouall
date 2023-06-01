@@ -63,7 +63,7 @@ $f3->route('GET|POST /report/@id', function($f3, $params) {
 });
 
 
-$f3->route('GET /post/@id', function($f3, $params) {
+$f3->route('GET|POST /post/@id', function($f3, $params) {
     $GLOBALS['con']->post($params['id']);
 });
 
