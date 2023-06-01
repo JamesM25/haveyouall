@@ -1,13 +1,6 @@
 <?php
 
-/*
- * Path to the database connection file.
- * Since we're hosting this on our own domains, this will be different for each person.
- * This was the best solution we could come up with without requiring each person to configure the file differently.
- * Originally we attempted to use /home/../db_haveyouall.php, but the ../ did not work.
- */
-const DB_PATH = '../../../db_haveyouall.php';
-require_once DB_PATH;
+require_once $_SERVER['DOCUMENT_ROOT'].'/../db_haveyouall.php';
 
 /**
  * This class manages all interactions with the database.
