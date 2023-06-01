@@ -13,7 +13,7 @@ class Validation
     static function validEmail($email)
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL)
-            && !Database::emailUsed($email); // Don't allow multiple accounts to be created with the same email
+            && !$GLOBALS['data']->emailUsed($email); // Don't allow multiple accounts to be created with the same email
     }
 
     /**
@@ -54,7 +54,7 @@ class Validation
      */
     static function validLogin($email, $password)
     {
-        return Database::checkCredentials($email, $password);
+        return $GLOBALS['data']->checkCredentials($email, $password);
     }
 
     /**

@@ -5,21 +5,18 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/../db_haveyouall.php';
 /**
  * This class manages all interactions with the database.
  */
-class Database
+class DataLayer
 {
-    private static $_db = null;
+    private $_dbh = null;
 
-    private static function getDatabase()
+    function __construct()
     {
-        if (self::$_db === null) {
-            try {
-                self::$_db = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
-            }
-            catch(PDOException $e) {
-                echo $e->getMessage();
-            }
+        try {
+            $this->_dbh = new PDO( DB_DSN, DB_USERNAME, DB_PASSWORD );
         }
-        return self::$_db;
+        catch(PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     /**
@@ -27,13 +24,11 @@ class Database
      * @param $email
      * @return bool True if an account with the given email address exists
      */
-    static function emailUsed($email)
+    function emailUsed($email)
     {
-        $db = self::getDatabase();
-
         $sql = "SELECT * FROM `Users` WHERE Email=:email";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -47,13 +42,11 @@ class Database
      * @param $password string The user's password
      * @return void
      */
-    static function createUser($email, $name, $password)
+    function createUser($email, $name, $password)
     {
-        $db = self::getDatabase();
-
         $sql = "INSERT INTO `Users` (`Email`, `Name`, `Password`) VALUES (:email, :username, :password)";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->bindParam(":username", $name, PDO::PARAM_STR);
         $stmt->bindParam(":password", $password, PDO::PARAM_STR);
@@ -65,13 +58,11 @@ class Database
      * @param $id int A user ID
      * @return Admin|User|null
      */
-    static function getUser($id)
+    function getUser($id)
     {
-        $db = self::getDatabase();
-
         $sql = "SELECT * FROM `Users` WHERE ID=:id";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
 
@@ -91,13 +82,11 @@ class Database
      * @param $password string a password
      * @return bool True if the credentials are valid
      */
-    static function checkCredentials($email, $password)
+    function checkCredentials($email, $password)
     {
-        $db = self::getDatabase();
-
         $sql = "SELECT `ID` FROM `Users` WHERE `Email`=:email AND `Password`=:password";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->bindParam(":password", $password, PDO::PARAM_STR);
         $stmt->execute();
@@ -113,13 +102,11 @@ class Database
      * @param $email string
      * @return Admin|false|User
      */
-    static function getUserFromEmail($email)
+    function getUserFromEmail($email)
     {
-        $db = self::getDatabase();
-
         $sql = "SELECT * FROM `Users` WHERE Email=:email";
 
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->execute();
 
@@ -137,22 +124,19 @@ class Database
      * @param $post Post The post contents
      * @return int The ID of the post
      */
-    static function createPost($post)
+    function createPost($post)
     {
-        $db = self::getDatabase();
+        $sql = "INSERT INTO `Posts` (`User`, `Title`, `Body`) VALUES (:user, :title, :body)";
 
-        $sql = "INSERT INTO `Posts` (`User`, `Title`, `Body`, `Date`) VALUES (:user, :title, :body, :date)";
-
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
 
         $stmt->bindParam(":user", $post->getUser()->getId(), PDO::PARAM_INT);
-        $stmt->bindParam(":title", $post->getTitle(), PDO::PARAM_STR);
-        $stmt->bindParam(":body", $post->getBody(), PDO::PARAM_STR);
-        $stmt->bindParam(":date", $post->getTime(), PDO::PARAM_STR);
+        $stmt->bindParam(":title", $post->getTitle());
+        $stmt->bindParam(":body", $post->getBody());
 
         $stmt->execute();
 
-        return $db->lastInsertId();
+        return $this->_dbh->lastInsertId();
     }
 
     /**
@@ -160,13 +144,11 @@ class Database
      * @param $id int A post ID
      * @return Post|null
      */
-    static function getPost($id)
+    function getPost($id)
     {
-        $db = self::getDatabase();
-
         // Retrieve the ID of the most recent post
         $sql = "SELECT * FROM `Posts` WHERE `ID`=:id LIMIT 1";
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -178,18 +160,16 @@ class Database
      * This method returns an array of the most recent posts, containing no more than 50 elements.
      * @return array
      */
-    static function getRecentPosts()
+    function getRecentPosts()
     {
-        $db = self::getDatabase();
-
         $sql = "SELECT * FROM `Posts` ORDER BY `Date` DESC LIMIT 50";
-        $stmt = $db->prepare($sql);
+        $stmt = $this->_dbh->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
 
         $posts = array();
         foreach ($result as $row) {
-            $posts[$row['ID']] = self::postFromRow($row);
+            $posts[$row['ID']] = $this->postFromRow($row);
         }
 
         return $posts;
@@ -203,10 +183,10 @@ class Database
             return new User($row['ID'], $row['Name']);
         }
     }
-    private static function postFromRow($row)
+    private function postFromRow($row)
     {
         return new Post(
-            self::getUser($row['User']),
+            $this->getUser($row['User']),
             $row['Title'],
             $row['Body'],
             $row['Date']);

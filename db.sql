@@ -13,7 +13,7 @@ CREATE TABLE Posts (
     `User` INT NOT NULL,
     `Title` VARCHAR(255) NOT NULL,
     `Body` TEXT NOT NULL,
-    `Date` DATETIME NOT NULL,
+    `Date` DATETIME NOT NULL DEFAULT NOW(),
 
     FOREIGN KEY (`User`) REFERENCES Users(ID)
 );

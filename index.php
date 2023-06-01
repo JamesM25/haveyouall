@@ -15,6 +15,7 @@ require_once "vendor/autoload.php";
 // Create an F3 (Fat-Free Framework) object
 $f3 = Base::instance();
 $con = new Controller($f3);
+$data = new DataLayer();
 
 // TODO: The current icon is a placeholder. We should find something better eventually.
 const ICON_PATH = 'images/mbox-icon.png';

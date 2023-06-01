@@ -17,7 +17,7 @@ class Post
      * @param $body string The body text
      * @param $time string The post's creation time
      */
-    function __construct($user, $title, $body, $time)
+    function __construct($user, $title, $body, $time = "")
     {
         $this->_user = $user;
         $this->_title = $title;

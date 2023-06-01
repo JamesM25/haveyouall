@@ -52,7 +52,7 @@ class Controller
      */
     function home()
     {
-        $this->_f3->set("posts", Database::getRecentPosts());
+        $this->_f3->set("posts", $GLOBALS['data']->getRecentPosts());
         $this->render("view/home.html");
     }
 
@@ -71,7 +71,7 @@ class Controller
 
             if (Validation::validLogin($email, $password)) {
                 // Log the user in
-                $this->_f3->set("SESSION.user", Database::getUserFromEmail($email));
+                $this->_f3->set("SESSION.user", $GLOBALS['data']->getUserFromEmail($email));
 
                 // Reroute to home
                 $this->_f3->reroute("/");
@@ -121,10 +121,10 @@ class Controller
 
             if (empty($this->_f3->get('errors'))) {
 
-                Database::createUser($email, $name, $password);
+                $GLOBALS['data']->createUser($email, $name, $password);
 
                 // Log the user in
-                $this->_f3->set("SESSION.user", Database::getUserFromEmail($email));
+                $this->_f3->set("SESSION.user", $GLOBALS['data']->getUserFromEmail($email));
 
                 $this->render('view/success.html');
 
@@ -163,7 +163,7 @@ class Controller
                 $post = new Post(User::current(), $title, $body, Time::getCurrent());
 
                 // Add the post to the database
-                $postId = Database::createPost($post);
+                $postId = $GLOBALS['data']->createPost($post);
 
                 // Reroute to view the post
                 $this->_f3->reroute("/post/$postId");
@@ -183,7 +183,7 @@ class Controller
      */
     function post($id)
     {
-        $post = Database::getPost($id);
+        $post = $GLOBALS['data']->getPost($id);
         $this->_f3->set("post", $post);
         $this->render("view/post.html");
     }
