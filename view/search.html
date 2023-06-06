@@ -1,0 +1,25 @@
+<div class="container">
+    <p>Displaying page {{ @userPage }} of {{ @searchPageCount }} ({{ @searchResultTotal }} total results)</p>
+
+    <div class="mb-3">
+        <div class="d-inline-block">
+            <form method="get" action="{{ @BASE }}/search">
+                <input type="hidden" name="query" value="{{ @userSearch }}">
+                <input type="hidden" name="page" value="{{ @userPage - 1 }}">
+                <button <check if="{{ @userPage <= 1}}">disabled</check> class="btn btn-success">Last Page</button>
+            </form>
+        </div>
+        <div class="d-inline-block">
+            <form method="get" action="{{ @BASE }}/search">
+                <input type="hidden" name="query" value="{{ @userSearch }}">
+                <input type="hidden" name="page" value="{{ @userPage + 1 }}">
+                <button <check if="{{ @userPage >= @searchPageCount}}">disabled</check> class="btn btn-success">Next Page</button>
+            </form>
+        </div>
+    </div>
+
+    <repeat group="{{ @searchResults }}" key=" {{ @id }}" value="{{ @post }}">
+        <include href="view/post_template.html">
+    </repeat>
+
+</div>

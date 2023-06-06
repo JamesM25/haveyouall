@@ -9,10 +9,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <form class="form-inline my-2 my-lg-0 navbar-form">
+    <form class="form-inline my-2 my-lg-0 navbar-form" method="get" action="{{ @BASE }}/search">
       <div class="input-group input-group-search mx-auto">
 
-        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="search-button-addon">
+        <input type="search" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="search-button-addon" required name="query" value="{{ @userSearch }}">
         <div class="input-group-append">
           <button class="btn btn-success" type="submit" id="search-button-addon">&#128269;</button>
         </div>

@@ -9,6 +9,8 @@ class DataLayer
 {
     private $_dbh = null;
 
+    const SEARCH_PAGE_LENGTH = 5;
+
     function __construct()
     {
         try {
@@ -297,6 +299,59 @@ class DataLayer
         $result = $stmt->fetch();
 
         return new Stats($result['topics'], $result['posts'], $result['members'], $this->getUser($result['newestUser']));
+    }
+
+    /**
+     * Searches for posts according to the given search query
+     * @param $query string A textual search query
+     * @param $page int A page number. Pages are used so that results are not all displayed at once.
+     * @return array Posts matching the given query.
+     */
+    function getSearchResults($query, $page)
+    {
+        $sql = "SELECT * FROM Posts
+         WHERE Title LIKE :query OR Body LIKE :query
+         ORDER BY Date DESC
+         LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $query = "%$query%";
+        $offset = ($page - 1) * self::SEARCH_PAGE_LENGTH;
+
+        $stmt->bindValue(":query", $query);
+        $stmt->bindValue(":limit", self::SEARCH_PAGE_LENGTH, PDO::PARAM_INT);
+        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $posts = array();
+        foreach ($results as $row) {
+            $posts[$row["ID"]] = $this->postFromRow($row);
+        }
+
+        return $posts;
+    }
+
+    /**
+     * @param $query string A search query
+     * @return int Total number of posts that match the given query
+     */
+    function getSearchResultCount($query)
+    {
+        $sql = "SELECT COUNT(*) FROM Posts
+                WHERE Title LIKE :query OR Body LIKE :query";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $query = "%$query%";
+        $stmt->bindParam(":query", $query);
+
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
     }
 
     private static function userFromRow($row)

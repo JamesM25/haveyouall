@@ -36,6 +36,7 @@ const SCRIPTS = array(
 $f3->set('favicon', ICON_PATH);
 $f3->set('stylesheets', STYLESHEETS);
 $f3->set('scripts', SCRIPTS);
+$f3->set("userSearch", "");
 
 // Default route
 $f3->route('GET /', function () {
@@ -65,6 +66,10 @@ $f3->route('GET|POST /report/@id', function($f3, $params) {
 
 $f3->route('GET|POST /post/@id', function($f3, $params) {
     $GLOBALS['con']->post($params['id']);
+});
+
+$f3->route('GET /search', function () {
+    $GLOBALS['con']->search();
 });
 
 $f3->route('GET /remove/@id', function($f3, $params) {

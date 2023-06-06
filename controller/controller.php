@@ -244,6 +244,36 @@ class Controller
     }
 
     /**
+     * Displays the results of a search query using GET
+     * @return void
+     */
+    function search()
+    {
+        if (!isset($_GET["query"])) {
+            $this->_f3->reroute("/");
+        }
+
+        $query = $_GET["query"];
+        $page = $_GET["page"] ?? 1;
+
+        $searchResultTotal = $GLOBALS['data']->getSearchResultCount($query);
+        $pageCount = ceil($searchResultTotal / DataLayer::SEARCH_PAGE_LENGTH);
+
+        // Clamp current page to [1, $pageCount]
+        $page = min(max(1, $page), $pageCount);
+
+        $searchResults = $GLOBALS['data']->getSearchResults($query, $page);
+
+        $this->_f3->set("userSearch", $query);
+        $this->_f3->set("userPage", $page);
+        $this->_f3->set("searchPageCount", $pageCount);
+        $this->_f3->set("searchResults", $searchResults);
+        $this->_f3->set("searchResultTotal", $searchResultTotal);
+
+        $this->render("view/search.html");
+    }
+
+    /**
      * Removes a post
      * If the user does not have administrator permissions, a 404 error will be displayed.
      * @param $id int A post ID
