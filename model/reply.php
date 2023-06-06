@@ -42,6 +42,6 @@ class Reply
      */
     function getDate()
     {
-        return $this->_date;
+        return Time::formatTime($this->_date);
     }
 }

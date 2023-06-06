@@ -66,7 +66,7 @@ class Post
      */
     function getTime()
     {
-        return $this->_time;
+        return Time::formatTime($this->_time);
     }
 
     /**
