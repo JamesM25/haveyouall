@@ -364,6 +364,31 @@ class DataLayer
         return $stmt->fetchColumn();
     }
 
+    /**
+     * Finds up to 4 topics with the most recent replies
+     * @return array Active topics
+     */
+    function getActiveTopics()
+    {
+        $sql = "SELECT Posts.ID FROM Posts
+                    JOIN Replies ON Replies.Thread = Posts.ID
+                    GROUP BY Posts.ID
+                    ORDER BY MAX(Replies.Date) DESC
+                    LIMIT 4";
+
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->execute();
+
+        $posts = array();
+        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        foreach ($results as $row) {
+            $posts[$row[0]] = $this->getPost($row[0]);
+        }
+
+        return $posts;
+    }
+
     private static function userFromRow($row)
     {
         if ($row['Admin']) {
