@@ -48,10 +48,16 @@ class DataLayer
     {
         $sql = "INSERT INTO `Users` (`Email`, `Name`, `Password`) VALUES (:email, :username, :password)";
 
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        if ($passwordHash === false) {
+            // password_hash should return a string if it was successful.
+            return;
+        }
+
         $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
         $stmt->bindParam(":username", $name, PDO::PARAM_STR);
-        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+        $stmt->bindParam(":password", $passwordHash, PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -86,16 +92,20 @@ class DataLayer
      */
     function checkCredentials($email, $password)
     {
-        $sql = "SELECT `ID` FROM `Users` WHERE `Email`=:email AND `Password`=:password";
+        $sql = "SELECT ID, Password FROM Users WHERE Email=:email";
 
         $stmt = $this->_dbh->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        $stmt->bindParam(":password", $password, PDO::PARAM_STR);
+        $stmt->bindParam(":email", $email);
         $stmt->execute();
 
         $result = $stmt->fetchAll();
 
-        return count($result) > 0;
+        // Invalid email
+        if (count($result) <= 0) {
+            return false;
+        }
+
+        return password_verify($password, $result[0]["Password"]);
     }
 
     /**
