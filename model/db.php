@@ -288,7 +288,21 @@ class DataLayer
         $stmt = $this->_dbh->prepare($sql);
         $stmt->bindValue(":id", $postId);
         $stmt->execute();
-        $result = $stmt->fetch();
+
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+
+        return $result[0];
+    }
+
+    function getVoteCount($postId)
+    {
+        $sql = "SELECT COUNT(*) FROM Votes WHERE Post=:post";
+
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindParam(":post", $postId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_NUM);
 
         return $result[0];
     }
@@ -402,6 +416,58 @@ class DataLayer
         $stmt->execute();
     }
 
+    /**
+     * Increments a post's vote count by one
+     * @param $post int ID of the post receiving the vote
+     * @param $user int ID of the user submitting the vote
+     */
+    function addVote($post, $user)
+    {
+        $sql = "INSERT INTO Votes (Post, User) VALUES (:post, :user)";
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->bindParam(":post", $post, PDO::PARAM_INT);
+        $stmt->bindParam(":user", $user, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Removes a vote from a post
+     * @param $post int ID of the post that received the vote
+     * @param $user int ID of the user who submitted the vote
+     */
+    function removeVote($post, $user)
+    {
+        $sql = "DELETE FROM Votes WHERE Post=:post AND User=:user";
+        $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->bindParam(":post", $post, PDO::PARAM_INT);
+        $stmt->bindParam(":user", $user, PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
+    /**
+     * Checks whether a post has received a vote from a user with the specified ID
+     * @param $post int ID of the post being checked
+     * @param $user int ID of the user being checked
+     * @return bool True if the post has received a vote from the user with the given ID
+     */
+    function getVote($post, $user)
+    {
+        $sql = "SELECT COUNT(*) FROM Votes WHERE Post = :post AND User=:user";
+
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindParam(":post", $post, PDO::PARAM_INT);
+        $stmt->bindParam(":user", $user, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_NUM);
+
+        return $result[0] != 0;
+    }
+
     private static function userFromRow($row)
     {
         if ($row['Admin']) {
@@ -419,7 +485,8 @@ class DataLayer
             $row['Date'],
             $row['ID'],
             $this->getReplyCount($row['ID']),
-            $row['Views']);
+            $row['Views'],
+            $this->getVoteCount($row['ID']));
     }
     private function replyFromRow($row)
     {

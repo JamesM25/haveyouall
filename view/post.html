@@ -1,7 +1,12 @@
 <div class="container">
 <check if="{{ isset(@post) }}">
     <true>
-        <h1>{{ @post->getTitle() }}</h1>
+        <h1>{{ @post->getTitle() }}
+        (
+            <a href="{{ @BASE }}/vote/{{ @post->getId() }}"><i class="bi bi-star-fill"></i></a>
+            {{ @post->getVotes() }}
+        )
+        </h1>
         <p>{{ @post->getBody() }}</p>
         <p>Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
 

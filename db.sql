@@ -42,3 +42,13 @@ CREATE TABLE Reports (
     FOREIGN KEY (Post) REFERENCES Posts(ID),
     FOREIGN KEY (User) REFERENCES Users(ID)
 );
+
+DROP TABLE IF EXISTS Votes;
+CREATE TABLE Votes (
+    User INT NOT NULL,
+    Post INT NOT NULL,
+
+    PRIMARY KEY (User, Post),
+    FOREIGN KEY (User) REFERENCES Users(ID),
+    FOREIGN KEY (Post) REFERENCES Posts(ID)
+);

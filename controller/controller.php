@@ -248,6 +248,27 @@ class Controller
     }
 
     /**
+     * Adds a vote to the post with the given ID
+     * @param $id int A post ID
+     */
+    function vote($id)
+    {
+        if (!Validation::isLoggedIn()) {
+            $this->_f3->reroute("/login");
+        }
+
+        $userId = User::current()->getId();
+
+        if (!Validation::hasVoted($id)) {
+            $GLOBALS['data']->addVote($id, $userId);
+        } else {
+            $GLOBALS['data']->removeVote($id, $userId);
+        }
+
+        $this->_f3->reroute("/post/$id");
+    }
+
+    /**
      * Displays the results of a search query using GET
      * @return void
      */

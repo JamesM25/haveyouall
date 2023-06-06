@@ -12,6 +12,7 @@ class Post
     private $_id;
     private $_replyCount;
     private $_views;
+    private $_votes;
 
     /**
      * Constructs a new Post object
@@ -22,8 +23,9 @@ class Post
      * @param $id int The post's database ID
      * @param $replyCount int The number of replies
      * @param $views int How many times this post has been viewed by a user
+     * @param $votes int How many votes the post has received
      */
-    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0, $views = 0)
+    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0, $views = 0, $votes = 0)
     {
         $this->_user = $user;
         $this->_title = $title;
@@ -32,6 +34,7 @@ class Post
         $this->_id = $id;
         $this->_replyCount = $replyCount;
         $this->_views = $views;
+        $this->_votes = $votes;
     }
 
     /**
@@ -82,8 +85,19 @@ class Post
         return $this->_replyCount;
     }
 
+    /**
+     * @return int Number of times the post has been viewed
+     */
     function getViews()
     {
         return $this->_views;
+    }
+
+    /**
+     * @return int Number of votes the post has received
+     */
+    function getVotes()
+    {
+        return $this->_votes;
     }
 }

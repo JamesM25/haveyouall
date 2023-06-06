@@ -68,6 +68,10 @@ $f3->route('GET|POST /post/@id', function($f3, $params) {
     $GLOBALS['con']->post($params['id']);
 });
 
+$f3->route('GET|POST /vote/@id', function($f3, $params) {
+    $GLOBALS['con']->vote($params['id']);
+});
+
 $f3->route('GET /search', function () {
     $GLOBALS['con']->search();
 });

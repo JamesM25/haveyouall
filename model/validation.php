@@ -82,4 +82,20 @@ class Validation
     {
         return self::isLoggedIn() && get_class(User::current()) === "Admin";
     }
+
+    /**
+     * Checks whether the user has voted for the post with the given ID
+     * @param $postId int ID of a post
+     * @return bool True if the user has already voted for this post
+     */
+    static function hasVoted($postId)
+    {
+        if (!self::isLoggedIn()) {
+            return false;
+        }
+
+        $userId = User::current()->getId();
+
+        return $GLOBALS['data']->getVote($postId, $userId);
+    }
 }
