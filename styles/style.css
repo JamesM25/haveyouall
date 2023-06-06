@@ -50,3 +50,13 @@ container {
 .break {
     word-break: break-word;
 }
+.dropdown-menu.same-width {
+    width: 100%;
+    min-width: unset;
+}
+
+.dropdown-menu.same-width button.dropdown-item {
+    width: 100%;
+    text-align: left;
+    white-space: normal;
+}

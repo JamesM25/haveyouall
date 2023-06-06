@@ -1,46 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-9 mb-3">
             <div class="row text-left mb-5">
                 <div class="col-lg-6 mb-3 mb-sm-0">
-                    <div class=" bg-white bg-op-9 text-sm w-lg-50">
-                        <!-- TODO:
-                            This is a hack to prevent PHPStorm from displaying warnings about the select element
-                            missing a label. Right now, the first option is used to identify what the dropdown does,
-                            but this should be improved in the future. -->
-                        <label class="w-100">
-
-                                <button class="btn btn-secondary dropdown-toggle w-100" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Categories
-                                </button>
-                                <div class="dropdown-menu" >
-                                    <button class="dropdown-item" type="button">Action</button>
-                                    <button class="dropdown-item" type="button">Adventure</button>
-                                    <button class="dropdown-item" type="button">FPS</button>
+                    <div class="bg-white bg-op-9 text-sm">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Categories
+                            </button>
+                            <div class="dropdown-menu same-width">
+                                <button class="dropdown-item" type="button">Action</button>
+                                <button class="dropdown-item" type="button">Adventure</button>
+                                <button class="dropdown-item" type="button">FPS</button>
                             </div>
-                        </label>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-right">
-                    <div class="bg-white bg-op-9 ml-auto text-sm w-lg-50">
-                        <!-- TODO: Same as the previous select -->
-                        <label class="w-100">
-                            <button class="btn btn-secondary dropdown-toggle w-100" type="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="bg-white bg-op-9 ml-auto text-sm">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Filter by
                             </button>
-                            <div class="dropdown-menu" >
-                                <button class="dropdown-item w-100" type="button">Votes</button>
+                            <div class="dropdown-menu same-width">
+                                <button class="dropdown-item" type="button">Votes</button>
                                 <button class="dropdown-item" type="button">Replies</button>
                                 <button class="dropdown-item" type="button">Views</button>
                             </div>
-
-
+                        </div>
                         </label>
                     </div>
                 </div>
             </div>
 
-            <check if="{{ count(@posts) > 0 }}">
+      <check if="{{ count(@posts) > 0 }}">
                 <true>
                     <repeat group="{{ @posts }}" key=" {{ @id }}" value=" {{ @post }}">
                         <include href="view/post_template.html">
@@ -148,12 +148,12 @@
         </div>
 
 
-        <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-lg-0">
+        <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-5">
 
 
             <!-- Active Topics -->
-            <div class="bg-white mb-3">
-                <h4 class="px-3 py-4 op-5 m-0">
+            <div class="bg-white mt-5">
+                <h4 class="mt-9 px-3 py-4 op-5 m-0">
                     Active Topics
                 </h4>
 
@@ -188,3 +188,6 @@
         </div>
     </div>
 </div>
+
+</body>
+</html>
