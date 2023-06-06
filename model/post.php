@@ -11,6 +11,7 @@ class Post
     private $_time;
     private $_id;
     private $_replyCount;
+    private $_views;
 
     /**
      * Constructs a new Post object
@@ -20,8 +21,9 @@ class Post
      * @param $time string The post's creation time
      * @param $id int The post's database ID
      * @param $replyCount int The number of replies
+     * @param $views int How many times this post has been viewed by a user
      */
-    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0)
+    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0, $views = 0)
     {
         $this->_user = $user;
         $this->_title = $title;
@@ -29,6 +31,7 @@ class Post
         $this->_time = $time;
         $this->_id = $id;
         $this->_replyCount = $replyCount;
+        $this->_views = $views;
     }
 
     /**
@@ -77,5 +80,10 @@ class Post
     function getReplyCount()
     {
         return $this->_replyCount;
+    }
+
+    function getViews()
+    {
+        return $this->_views;
     }
 }

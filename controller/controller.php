@@ -234,6 +234,9 @@ class Controller
 
             // Clear the textarea value
             $reply = "";
+        } else {
+            // Put this in an else block, so that additional views aren't added when the user replies to the post.
+            $GLOBALS['data']->addView($post->getId());
         }
 
         $this->_f3->set("userReply", $reply);

@@ -389,6 +389,19 @@ class DataLayer
         return $posts;
     }
 
+    /**
+     * Increments a post's view count by one
+     * @param $id int A post ID
+     * @return void
+     */
+    function addView($id)
+    {
+        $sql = "UPDATE Posts SET Views=Views+1 WHERE ID=:id";
+        $stmt = $this->_dbh->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
     private static function userFromRow($row)
     {
         if ($row['Admin']) {
@@ -405,7 +418,8 @@ class DataLayer
             $row['Body'],
             $row['Date'],
             $row['ID'],
-            $this->getReplyCount($row['ID']));
+            $this->getReplyCount($row['ID']),
+            $row['Views']);
     }
     private function replyFromRow($row)
     {
