@@ -1,8 +1,10 @@
+<link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
 <div class="container">
   <h1>Administrator dashboard</h1>
   <hr>
   <h2>User Reports</h2>
-  <table class="table table-striped table-responsive">
+  <table id="reports-table">
     <thead>
     <tr>
       <th>Post</th>
@@ -25,13 +27,21 @@
                 <em>Unknown</em>
               </false>
             </check>
-
           </td>
           <td>{{ @report->getUser()->getName() }}</td>
-          <td>{{ @report->getDate() }}</td>
+          <td>{{ date('M d, Y g:ia', strtotime(@report->getDate())) }}</td>
           <td class="break">{{ @report->getText() }}</td>
         </tr>
       </repeat>
     </tbody>
   </table>
 </div>
+
+<script
+        src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+        crossorigin="anonymous"></script>
+<script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  let table = new DataTable('#reports-table');
+</script>
