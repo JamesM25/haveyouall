@@ -20,18 +20,25 @@ $data = new DataLayer();
 // TODO: The current icon is a placeholder. We should find something better eventually.
 const ICON_PATH = 'images/mbox-icon.png';
 
-const STYLESHEETS = array(
+const STYLESHEETS = [
     "styles/style.css",
     "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css",
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
     "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-);
+];
 
-const SCRIPTS = array(
+const SCRIPTS = [
     "https://code.jquery.com/jquery-3.3.1.slim.min.js",
     "https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js",
     "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-);
+];
+
+const FILTER_TYPES = [
+    "date",
+    "votes",
+    "replies",
+    "views"
+];
 
 $f3->set('favicon', ICON_PATH);
 $f3->set('stylesheets', STYLESHEETS);

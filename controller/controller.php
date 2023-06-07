@@ -52,7 +52,22 @@ class Controller
      */
     function home()
     {
-        $this->_f3->set("posts", $GLOBALS['data']->getRecentPosts());
+        $category = $this->_f3->get("SESSION.category") ?? "";
+        if (isset($_GET["category"])) {
+            $category = $_GET["category"];
+            $this->_f3->set("SESSION.category", $category);
+        }
+
+        $filter = $this->_f3->get("SESSION.filter") ?? FILTER_TYPES[0];
+        if (isset($_GET["filter"])) {
+            $filter = $_GET["filter"];
+            $this->_f3->set("SESSION.filter", $filter);
+        }
+
+        $this->_f3->set("SESSION.category", $category);
+        $this->_f3->set("SESSION.filter", $filter);
+
+        $this->_f3->set("posts", $GLOBALS['data']->getRecentPosts($category));
         $this->_f3->set("stats", $GLOBALS['data']->getStats());
         $this->_f3->set("activeTopics", $GLOBALS['data']->getActiveTopics());
         $this->render("view/home.html");

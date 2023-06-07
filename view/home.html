@@ -16,11 +16,17 @@
                                 Categories
                             </button>
                             <div class="dropdown-menu same-width">
-                                <button class="dropdown-item" type="button">Action</button>
-                                <button class="dropdown-item" type="button">Adventure</button>
-                                <button class="dropdown-item" type="button">FPS</button>
+                                <a href="{{ @BASE }}?category=">
+                                    <button class="dropdown-item" type="button">All</button>
+                                </a>
+                                <repeat group="{{ Post::CATEGORIES }}" value="{{ @category }}">
+                                    <a href="{{ @BASE }}?category={{ @category }}">
+                                        <button class="dropdown-item" type="button">{{ @category }}</button>
+                                    </a>
+                                </repeat>
                             </div>
                         </div>
+                        <div>{{ empty(@SESSION.category) ? "All" : @SESSION.category }}</div>
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-right">
@@ -30,12 +36,14 @@
                                 Filter by
                             </button>
                             <div class="dropdown-menu same-width">
-                                <button class="dropdown-item" type="button">Votes</button>
-                                <button class="dropdown-item" type="button">Replies</button>
-                                <button class="dropdown-item" type="button">Views</button>
+                                <repeat group="{{ FILTER_TYPES }}" value="{{ @type }}">
+                                    <a href="{{ @BASE }}?filter={{ @type }}">
+                                        <button class="dropdown-item" type="button">{{ ucfirst(@type) }}</button>
+                                    </a>
+                                </repeat>
                             </div>
                         </div>
-                        </label>
+                        <div>{{ ucfirst(@SESSION.filter) }}</div>
                     </div>
                 </div>
             </div>

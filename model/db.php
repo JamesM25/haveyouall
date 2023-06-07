@@ -242,10 +242,21 @@ class DataLayer
      * This method returns an array of the most recent posts, containing no more than 50 elements.
      * @return array
      */
-    function getRecentPosts()
+    function getRecentPosts($category = "")
     {
-        $sql = "SELECT * FROM `Posts` ORDER BY `Date` DESC LIMIT 50";
+        // TODO: Sort rows according to the "filter by" dropdown
+        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies
+            FROM Posts
+            LEFT JOIN Replies ON Replies.Thread=Posts.ID
+            WHERE Categories LIKE :categories
+            GROUP BY Posts.ID
+            ORDER BY Posts.Date DESC
+            LIMIT 50";
+
         $stmt = $this->_dbh->prepare($sql);
+
+        $stmt->bindValue(":categories", "%$category%");
+
         $stmt->execute();
         $result = $stmt->fetchAll();
 
