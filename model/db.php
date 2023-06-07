@@ -138,13 +138,14 @@ class DataLayer
      */
     function createPost($post)
     {
-        $sql = "INSERT INTO `Posts` (`User`, `Title`, `Body`) VALUES (:user, :title, :body)";
+        $sql = "INSERT INTO Posts (User, Title, Body, Categories) VALUES (:user, :title, :body, :categories)";
 
         $stmt = $this->_dbh->prepare($sql);
 
         $stmt->bindParam(":user", $post->getUser()->getId(), PDO::PARAM_INT);
         $stmt->bindParam(":title", $post->getTitle());
         $stmt->bindParam(":body", $post->getBody());
+        $stmt->bindParam(":categories", $post->getCategories());
 
         $stmt->execute();
 
@@ -482,6 +483,7 @@ class DataLayer
             $this->getUser($row['User']),
             $row['Title'],
             $row['Body'],
+            $row['Categories'],
             $row['Date'],
             $row['ID'],
             $this->getReplyCount($row['ID']),

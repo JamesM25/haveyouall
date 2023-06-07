@@ -47,6 +47,22 @@ class Validation
     }
 
     /**
+     * Checks whether the given categories are valid
+     * @param $categories array Array of category strings
+     * @return bool True if the categories are valid
+     */
+    static function validCategories($categories)
+    {
+        foreach ($categories as $category) {
+            if (!in_array($category, Post::CATEGORIES)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Checks whether the given login credentials are valid
      * @param $email string
      * @param $password string

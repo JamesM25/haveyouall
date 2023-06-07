@@ -155,14 +155,16 @@ class Controller
 
         $title = "";
         $body = "";
+        $categories = array();
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $title = $this->readFormInput("title", "Validation::validPostTitle");
             $body = $this->readFormInput("body", "Validation::validPostBody");
+            $categories = $this->readFormInput("categories", "Validation::validCategories", array());
 
             if (empty($this->_f3->get("errors"))) {
                 // Construct the post object
-                $post = new Post(User::current(), $title, $body, Time::getCurrent());
+                $post = new Post(User::current(), $title, $body, implode(", ", $categories), Time::getCurrent());
 
                 // Add the post to the database
                 $postId = $GLOBALS['data']->createPost($post);
@@ -174,6 +176,7 @@ class Controller
 
         $this->_f3->set("userTitle", $title);
         $this->_f3->set("userBody", $body);
+        $this->_f3->set("userCategories", $categories);
 
         $this->render("view/post_form.html");
     }
@@ -289,7 +292,7 @@ class Controller
         $page = $_GET["page"] ?? 1;
 
         $searchResultTotal = $GLOBALS['data']->getSearchResultCount($query);
-        $pageCount = ceil($searchResultTotal / DataLayer::SEARCH_PAGE_LENGTH);
+        $pageCount = max(ceil($searchResultTotal / DataLayer::SEARCH_PAGE_LENGTH), 1);
 
         // Clamp current page to [1, $pageCount]
         $page = min(max(1, $page), $pageCount);

@@ -1,24 +1,43 @@
 <div class="container" xmlns="">
-  <form method="post" class="mx-auto mt-4 w-50 text-center px-4 pt-4 pb-2 bg-light border rounded">
+  <form method="post" class="mx-auto mt-4 w-75 text-center px-4 pt-4 pb-2 bg-light border rounded">
 
     <h1>Create post</h1>
-    <div class="form-floating my-1">
-      <input id="title" type="text" class="form-control" name="title" placeholder="Post Title" required value="{{ @userTitle }}">
-      <label for="title">Post Title</label>
-      <check if="{{ isset(@errors['title']) }}">
-        <div class="err">{{ @errors['title'] }}</div>
-      </check>
-    </div>
-    <div class="form-floating my-1">
-      <textarea id="body" class="form-control" name="body" placeholder="Text" rows = "6" required>{{ @userBody }}</textarea>
-      <label for="body">Text</label>
-      <check if="{{ isset(@errors['body']) }}">
-        <div class="err">{{ @errors['body'] }}</div>
-      </check>
+    <div class="row">
+      <div class="col-8">
+        <div class="form-floating my-1">
+          <input id="title" type="text" class="form-control" name="title" placeholder="Post Title" required value="{{ @userTitle }}">
+          <label for="title">Post Title</label>
+          <check if="{{ isset(@errors['title']) }}">
+            <div class="err">{{ @errors['title'] }}</div>
+          </check>
+        </div>
+        <div class="form-floating my-1">
+          <textarea id="body" class="form-control" name="body" placeholder="Text" rows = "6" required>{{ @userBody }}</textarea>
+          <label for="body">Text</label>
+          <check if="{{ isset(@errors['body']) }}">
+            <div class="err">{{ @errors['body'] }}</div>
+          </check>
+        </div>
+      </div>
+      <div class="col border mt-1 pt-1">
+        <h2>Categories</h2>
+        <hr>
+        <div class="row text-left">
+          <repeat group="{{ Post::CATEGORIES }}" value="{{ @category }}">
+            <div class="col-6">
+              <input type="checkbox" id="cat-{{ @category }}" name="categories[]" value="{{ @category }}"
+                <check if="{{ in_array(@category, @userCategories) }}">checked</check>
+              >
+              <label for="cat-{{ @category }}">{{ @category }}</label>
+            </div>
+          </repeat>
+          <check if="{{ isset(@errors['categories']) }}">
+            <div class="err">{{ @errors['categories'] }}</div>
+          </check>
+        </div>
+      </div>
     </div>
 
-
-    <include href="view/form_errors.html"></include>
 
 
     <button class="btn btn-primary my-1 w-50">Submit</button>

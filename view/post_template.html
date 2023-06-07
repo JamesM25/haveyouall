@@ -5,7 +5,7 @@
         <a href="{{ @BASE }}/post/{{ @id }}" class="text-primary">{{ @post->getTitle() }}</a>
       </h5>
       <p class="text-sm">Posted {{ $post->getTime() }} by {{ @post->getUser()->getName() }}</p>
-      <div class="text"><p> Keywords: </p></div>
+      <div class="text"><p> Keywords: {{ $post->getCategories() }}</p></div>
     </div>
     <div class="col-md-4 op-7">
       <div class="row text-center op-7">

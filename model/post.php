@@ -13,23 +13,44 @@ class Post
     private $_replyCount;
     private $_views;
     private $_votes;
+    private $_categories;
+
+    const CATEGORIES = [
+        "Action",
+        "Adventure",
+        "Crime",
+        "Fighting",
+        "FPS",
+        "Horror",
+        "Platformer",
+        "Puzzle",
+        "Racing",
+        "RPG",
+        "Sandbox",
+        "Simulation",
+        "Sports",
+        "Strategy",
+        "Survival",
+    ];
 
     /**
      * Constructs a new Post object
      * @param $user User The user who created the post
      * @param $title string The post title
      * @param $body string The body text
+     * @param $categories string Comma deliminated string of categories
      * @param $time string The post's creation time
      * @param $id int The post's database ID
      * @param $replyCount int The number of replies
      * @param $views int How many times this post has been viewed by a user
      * @param $votes int How many votes the post has received
      */
-    function __construct($user, $title, $body, $time = "", $id = 0, $replyCount = 0, $views = 0, $votes = 0)
+    function __construct($user, $title, $body, $categories, $time = "", $id = 0, $replyCount = 0, $views = 0, $votes = 0)
     {
         $this->_user = $user;
         $this->_title = $title;
         $this->_body = $body;
+        $this->_categories = $categories;
         $this->_time = $time;
         $this->_id = $id;
         $this->_replyCount = $replyCount;
@@ -59,6 +80,14 @@ class Post
     function getBody()
     {
         return $this->_body;
+    }
+
+    /**
+     * @return string The post's categories
+     */
+    function getCategories()
+    {
+        return $this->_categories;
     }
 
     /**
