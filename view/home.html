@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-      <check if="{{ count(@posts) > 0 }}">
+            <check if="{{ count(@posts) > 0 }}">
                 <true>
                     <repeat group="{{ @posts }}" key=" {{ @id }}" value=" {{ @post }}">
                         <include href="view/post_template.html">
@@ -59,105 +59,10 @@
                 </false>
             </check>
 
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary">Call of Duty</a>
-                        </h5> <img src = "images/place.jpg"  width="200"
-                                   height="200" alt="Placeholder Pic">
-                        <p class="text-sm">Posted <a class="text-black" href="#">20 minutes ago</a> by <a class="text-black" href="#">Michael</a></p>
-
-                        <div class="text"><p> Keywords: </p></div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="bi bi-star-fill"></i> <span class="d-block text-sm">2 Votes</span> </div>
-                            <div class="col px-1"> <i class="bi bi-reply"></i> <span class="d-block text-sm">5 Reply's</span> </div>
-                            <div class="col px-1"> <i class="bi bi-eye"></i> <span class="d-block text-sm">290 Views</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary">DeadSpace</a>
-                        </h5>
-                        <p class="text-sm">Posted <a class="text-black" href="#">1 hour ago</a> by <a class="text-black" href="#">James</a></p>
-                        <div class="text"><p> Keywords: </p></div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="bi bi-star-fill"></i> <span class="d-block text-sm">10 Votes</span> </div>
-                            <div class="col px-1"> <i class="bi bi-reply"></i> <span class="d-block text-sm">16 Reply's</span> </div>
-                            <div class="col px-1"> <i class="bi bi-eye"></i> <span class="d-block text-sm">170 Views</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary">OverWatch</a>
-                        </h5>
-                        <p class="text-sm">Posted <a class="text-black" href="#">2 hours ago</a> by <a class="text-black" href="#">Darius</a></p>
-                        <div class="text"><p> Keywords: </p></div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="bi bi-star-fill"></i> <span class="d-block text-sm">3 Votes</span> </div>
-                            <div class="col px-1"> <i class="bi bi-reply"></i> <span class="d-block text-sm">7 Reply's</span> </div>
-                            <div class="col px-1"> <i class="bi bi-eye"></i> <span class="d-block text-sm">112 Views</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary">Pokemon</a>
-                        </h5>
-                        <p class="text-sm">Posted <a class="text-black" href="#">2 days ago</a> by <a class="text-black" href="#">Stuart</a></p>
-                        <div class="text"><p> Keywords: </p></div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="bi bi-star-fill"></i> <span class="d-block text-sm">22 Votes</span> </div>
-                            <div class="col px-1"> <i class="bi bi-reply"></i> <span class="d-block text-sm">59 Reply's</span> </div>
-                            <div class="col px-1"> <i class="bi bi-eye"></i> <span class="d-block text-sm">522 Views</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card row-hover pos-relative py-3 px-3 mb-3 border-warning">
-                <div class="row align-items-center">
-                    <div class="col-md-8 mb-3 mb-sm-0">
-                        <h5>
-                            <a href="#" class="text-primary"> The Legend of Zelda</a>
-                        </h5>
-                        <p class="text-sm">Posted <a class="text-black" href="#">1 week ago</a> by <a class="text-black" href="#">marcus</a></p>
-                        <div class="text"><p> Keywords: </p></div>
-                    </div>
-                    <div class="col-md-4 op-7">
-                        <div class="row text-center op-7">
-                            <div class="col px-1"> <i class="bi bi-star-fill"></i> <span class="d-block text-sm">2 Votes</span> </div>
-                            <div class="col px-1"> <i class="bi bi-reply"></i> <span class="d-block text-sm">5 Reply's</span> </div>
-                            <div class="col px-1"> <i class="bi bi-eye"></i> <span class="d-block text-sm">290 Views</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
 
         <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-5">
-
 
             <!-- Active Topics -->
             <div class="bg-white mt-5">
