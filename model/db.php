@@ -193,7 +193,7 @@ class DataLayer
      */
     function getReports()
     {
-        $sql = "SELECT * FROM Reports ORDER BY `Date` DESC LIMIT 50";
+        $sql = "SELECT * FROM Reports ORDER BY Date DESC LIMIT 50";
 
         $stmt = $this->_dbh->prepare($sql);
 
@@ -216,7 +216,13 @@ class DataLayer
      */
     function getPost($id)
     {
-        $sql = "SELECT * FROM `Posts` WHERE `ID`=:id LIMIT 1";
+        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes 
+            FROM Posts
+            LEFT JOIN Replies ON Replies.Thread=Posts.ID
+            LEFT JOIN Votes ON Votes.Post=Posts.ID
+            WHERE Posts.ID=:id
+            GROUP BY Posts.ID
+            LIMIT 1";
         $stmt = $this->_dbh->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -245,9 +251,10 @@ class DataLayer
     function getRecentPosts($category = "")
     {
         // TODO: Sort rows according to the "filter by" dropdown
-        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies
+        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes
             FROM Posts
             LEFT JOIN Replies ON Replies.Thread=Posts.ID
+            LEFT JOIN Votes ON Votes.Post=Posts.ID
             WHERE Categories LIKE :categories
             GROUP BY Posts.ID
             ORDER BY Posts.Date DESC
@@ -274,7 +281,11 @@ class DataLayer
      */
     function getReplies($postId)
     {
-        $sql = "SELECT Replies.ID, Replies.Thread, Replies.User, Replies.Body, Replies.Date FROM Replies JOIN Posts ON Replies.Thread=Posts.ID WHERE Posts.ID=:id ORDER BY Replies.Date DESC";
+        $sql = "SELECT Replies.ID, Replies.Thread, Replies.User, Replies.Body, Replies.Date
+            FROM Replies
+            JOIN Posts ON Replies.Thread=Posts.ID
+            WHERE Posts.ID=:id
+            ORDER BY Replies.Date DESC";
 
         $stmt = $this->_dbh->prepare($sql);
         $stmt->bindValue(":id", $postId);
@@ -287,36 +298,6 @@ class DataLayer
         }
 
         return $replies;
-    }
-
-    /**
-     * @param $postId int
-     * @return int Number of replies
-     */
-    function getReplyCount($postId)
-    {
-        $sql = "SELECT COUNT(*) FROM Replies JOIN Posts ON Replies.Thread=Posts.ID WHERE Posts.ID=:id ORDER BY Replies.Date DESC";
-
-        $stmt = $this->_dbh->prepare($sql);
-        $stmt->bindValue(":id", $postId);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_NUM);
-
-        return $result[0];
-    }
-
-    function getVoteCount($postId)
-    {
-        $sql = "SELECT COUNT(*) FROM Votes WHERE Post=:post";
-
-        $stmt = $this->_dbh->prepare($sql);
-        $stmt->bindParam(":post", $postId, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $result = $stmt->fetch(PDO::FETCH_NUM);
-
-        return $result[0];
     }
 
     /**
@@ -345,10 +326,14 @@ class DataLayer
      */
     function getSearchResults($query, $page)
     {
-        $sql = "SELECT * FROM Posts
-         WHERE Title LIKE :query OR Body LIKE :query
-         ORDER BY Date DESC
-         LIMIT :limit OFFSET :offset";
+        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes
+            FROM Posts
+            LEFT JOIN Replies ON Replies.Thread=Posts.ID
+            LEFT JOIN Votes ON Votes.Post=Posts.ID
+            WHERE Title LIKE :query OR Posts.Body LIKE :query
+            GROUP BY Posts.ID
+            ORDER BY Date DESC
+            LIMIT :limit OFFSET :offset";
 
         $stmt = $this->_dbh->prepare($sql);
 
@@ -396,8 +381,10 @@ class DataLayer
      */
     function getActiveTopics()
     {
-        $sql = "SELECT Posts.ID FROM Posts
-                    JOIN Replies ON Replies.Thread = Posts.ID
+        $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes
+                    FROM Posts
+                    LEFT JOIN Replies ON Replies.Thread = Posts.ID
+                    LEFT JOIN Votes ON Votes.Post=Posts.ID
                     GROUP BY Posts.ID
                     ORDER BY MAX(Replies.Date) DESC
                     LIMIT 4";
@@ -407,9 +394,9 @@ class DataLayer
         $stmt->execute();
 
         $posts = array();
-        $results = $stmt->fetchAll(PDO::FETCH_NUM);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach ($results as $row) {
-            $posts[$row[0]] = $this->getPost($row[0]);
+            $posts[$row["ID"]] = self::postFromRow($row);
         }
 
         return $posts;
@@ -497,9 +484,9 @@ class DataLayer
             $row['Categories'],
             $row['Date'],
             $row['ID'],
-            $this->getReplyCount($row['ID']),
+            $row['Replies'],
             $row['Views'],
-            $this->getVoteCount($row['ID']));
+            $row['Votes']);
     }
     private function replyFromRow($row)
     {
