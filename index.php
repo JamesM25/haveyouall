@@ -34,7 +34,6 @@ const SCRIPTS = [
 ];
 
 const FILTER_TYPES = [
-    "date",
     "votes",
     "replies",
     "views"
