@@ -42,11 +42,14 @@ container {
     margin-right: 40px;
 
 }
+
 .nav-item {
     margin-left:15px;
     margin-right:15px;
 }
-
+hr.newhr {
+    border-top: 3px dashed black;
+}
 .break {
     word-break: break-word;
 }
@@ -60,4 +63,26 @@ container {
     text-align: left;
     white-space: normal;
     border-color: black;
+}
+.active {
+    margin-left: 10px;
+    text-align: center;
+}
+
+.stats {
+    margin-left:10px;
+
+}
+
+@media (min-width: 991px) {
+    .active {
+        text-align:center;
+        margin-top: 112px;
+    }
+}
+
+.active-heading-container,
+.stats-heading-container {
+    background-color: #f2f2f2;
+    text-align: center;
 }

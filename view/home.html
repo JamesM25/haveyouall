@@ -9,46 +9,35 @@
     <div class="row">
         <div class="col-lg-9 mb-3">
             <div class="row text-left mb-5">
-                <div class="col-lg-6 mb-3 mb-sm-0">
+                <div class="col-lg-6 mb-3">
                     <div class="bg-white bg-op-9 text-sm">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Categories
-                            </button>
-                            <div class="dropdown-menu same-width">
-                                <a href="{{ @BASE }}?category=">
-                                    <button class="dropdown-item" type="button">All</button>
-                                </a>
+                            <select class="form-select form-select-lg w-100" aria-label=".form-select-lg example" onchange="window.location.href = '{{ @BASE }}?category=' + this.value;">
+                                <option value="" {{ empty(@SESSION.category) ? 'selected' : '' }}>Categories (All):</option>
                                 <repeat group="{{ Post::CATEGORIES }}" value="{{ @category }}">
-                                    <a href="{{ @BASE }}?category={{ @category }}">
-                                        <button class="dropdown-item" type="button">{{ @category }}</button>
-                                    </a>
+                                    <option value="{{ @category }}" {{ @SESSION.category == @category ? 'selected' : '' }}>{{ @category }}</option>
                                 </repeat>
-                            </div>
+                            </select>
                         </div>
-                        <div>{{ empty(@SESSION.category) ? "All" : @SESSION.category }}</div>
                     </div>
                 </div>
                 <div class="col-lg-6 text-lg-right">
                     <div class="bg-white bg-op-9 ml-auto text-sm">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Filter by
-                            </button>
-                            <div class="dropdown-menu same-width">
+                            <select class="form-select form-select-lg w-100" aria-label=".form-select-lg example" onchange="window.location.href = '{{ @BASE }}?filter=' + this.value;">
+                                <option value="" {{ empty(@SESSION.filter) ? 'selected' : '' }}>Filter by (Date):</option>
                                 <repeat group="{{ FILTER_TYPES }}" value="{{ @type }}">
-                                    <a href="{{ @BASE }}?filter={{ @type }}">
-                                        <button class="dropdown-item" type="button">{{ ucfirst(@type) }}</button>
-                                    </a>
+                                    <option value="{{ @type }}" {{ @SESSION.filter == @type ? 'selected' : '' }}>{{ ucfirst(@type) }}</option>
                                 </repeat>
-                            </div>
+                            </select>
                         </div>
-                        <div>{{ ucfirst(@SESSION.filter) }}</div>
                     </div>
                 </div>
             </div>
 
-            <check if="{{ count(@posts) > 0 }}">
+
+
+        <check if="{{ count(@posts) > 0 }}">
                 <true>
                     <repeat group="{{ @posts }}" key=" {{ @id }}" value=" {{ @post }}">
                         <include href="view/post_template.html">
@@ -62,43 +51,55 @@
         </div>
 
 
-        <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0 mt-5">
-
+        <div class="col-lg-3 mb-4 mb-lg-0 px-lg-0">
             <!-- Active Topics -->
-            <div class="bg-white mt-5">
-                <h4 class="mt-9 px-3 py-4 op-5 m-0">
-                    Active Topics
-                </h4>
-
+            <div class="active">
+                <div class="active-heading-container">
+                    <h4 class="mt-9 px-3 py-4 op-5 m-0">
+                        Active Topics
+                    </h4>
+                </div>
                 <repeat group="{{ @activeTopics }}" key="{{ @id }}" value="{{ @post }}">
-                    <hr class="m-0">
+                    <hr>
                     <div class="pos-relative px-3 py-3">
                         <h6 class="text-primary text-sm">
                             <a href="{{ @BASE }}/post/{{ @id }}" class="text-primary">{{ @post->getTitle() }}</a>
                         </h6>
-                        <p class="mb-0 text-sm"> Posted {{ date('M d, Y g:ia', strtotime(@post->getTime())) }} by {{ @post->getUser()->getName() }}</p>
+                        <p class="mb-0 text-sm">Posted {{ date('M d, Y g:ia', strtotime(@post->getTime())) }} by {{ @post->getUser()->getName() }}</p>
                     </div>
                 </repeat>
-                
-                <hr class="m-0">
+                <br>
             </div>
 
             <!-- Stats -->
-            <div class="bg-white text-sm">
-                <h4 class="px-3 py-4 op-5 m-0 roboto-bold">
-                    Stats
-                </h4>
-                <hr class="my-0">
+            <div class="stats text-sm">
+                <div class="stats-heading-container">
+                    <h4 class="px-3 py-4 op-5 m-0 roboto-bold">
+                        Stats
+                    </h4>
+                </div>
+                <hr>
                 <div class="row text-center d-flex flex-row op-7 mx-0">
-                    <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right"> <span class="d-block lead font-weight-bold">{{ @stats->getTopics() }}</span> Topics </div>
-                    <div class="col-sm-6 col flex-ew text-center py-3 border-bottom"> <span class="d-block lead font-weight-bold">{{ @stats->getPosts() }}</span> Posts </div>
+                    <div class="col-sm-6 flex-ew text-center py-3 border-bottom border-right">
+                        <span class="d-block lead font-weight-bold">{{ @stats->getTopics() }}</span> Topics
+                    </div>
+                    <div class="col-sm-6 col flex-ew text-center py-3 border-bottom">
+                        <span class="d-block lead font-weight-bold">{{ @stats->getPosts() }}</span> Posts
+                    </div>
                 </div>
                 <div class="row d-flex flex-row op-7">
-                    <div class="col-sm-6 flex-ew text-center py-3 border-right "> <span class="d-block lead font-weight-bold">{{ @stats->getMembers() }}</span> Members </div>
-                    <div class="col-sm-6 flex-ew text-center py-3 "> <span class="d-block lead font-weight-bold">{{ @stats->getNewestUserName() }}</span> Newest Member </div>
+                    <div class="col-sm-6 flex-ew text-center py-3 border-right">
+                        <span class="d-block lead font-weight-bold">{{ @stats->getMembers() }}</span> Members
+                    </div>
+                    <div class="col-sm-6 flex-ew text-center py-3">
+                        <span class="d-block lead font-weight-bold">{{ @stats->getNewestUserName() }}</span> Newest Member
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 
