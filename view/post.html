@@ -1,43 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Post Details</title>
+    <link rel="stylesheet" href="{{ @BASE }}/styles/style.css">
+</head>
+<body>
 <div class="container">
-<check if="{{ isset(@post) }}">
-    <true>
-        <h1>{{ @post->getTitle() }}
-        (
-            <a href="{{ @BASE }}/vote/{{ @post->getId() }}"><i class="bi bi-star-fill"></i></a>
-            {{ @post->getVotes() }}
-        )
-        </h1>
-        <p>{{ @post->getBody() }}</p>
-        <p>Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
 
-        <p><a href="{{ @BASE }}/report/{{ @postId }}">Report</a></p>
+    <br>
+    <check if="{{ isset(@post) }}">
+        <true>
+            <h1>Post Title: {{ @post->getTitle() }}</h1>
+            <h5>Post description: {{ @post->getBody() }}</h5>
+            <p> Posted by {{ @post->getUser()->getName() }} on {{ @post->getTime() }}</p>
+            <hr>
+            <h4> Leave a like on this post?
+                (
+                <a href="{{ @BASE }}/vote/{{ @post->getId() }}"><i class="bi bi-star-fill"></i></a>
+                Liked: {{ @post->getVotes() }}
+                )
+            </h4>
+            <check if="{{ Validation::isAdmin() }}">
+                <p><a href="{{ @BASE }}/remove/{{ @postId }}">Delete</a></p>
+            </check>
+            <form method="post">
+                <div class="form-floating my-1">
+                    <textarea id="reply" class="form-control" name="reply" placeholder="Reply" rows="6" required>{{ @userReply }}</textarea>
+                    <label for="reply">Reply</label>
+                    <check if="{{ isset(@errors['reply']) }}">
+                        <div class="err">{{ @errors['reply'] }}</div>
+                    </check>
+                </div>
 
-        <check if="{{ Validation::isAdmin() }}">
-            <p><a href="{{ @BASE }}/remove/{{ @postId }}">Delete</a></p>
-        </check>
+                <button class="btn btn-primary my-1">Post Reply</button>
+            </form>
 
-        <form method="post">
-            <div class="form-floating my-1">
-                <textarea id="reply" class="form-control" name="reply" placeholder="Reply" rows = "6" required>{{ @userReply }}</textarea>
-                <label for="reply">Reply</label>
-                <check if="{{ isset(@errors['reply']) }}">
-                    <div class="err">{{ @errors['reply'] }}</div>
-                </check>
-            </div>
+            <p><a href="{{ @BASE }}/report/{{ @postId }}" class="btn btn-danger">Report Post</a></p>
 
-            <button class="btn btn-primary my-1">Post Reply</button>
-        </form>
-        <hr>
-
-        <repeat group="{{ @replies }}" value="{{ @reply }}">
-            <div class="my-4">
-                {{ @reply->getUser()->getName() }} on {{ @reply->getDate() }}:<br>
-                {{ @reply->getText() }}
-            </div>
-        </repeat>
-    </true>
-    <false>
-        <h1>Post not found</h1>
-    </false>
-</check>
+            <hr>
+            <b><p>Replies:</p></b>
+            <repeat group="{{ @replies }}" value="{{ @reply }}">
+                <div class="my-4">
+                    {{ @reply->getUser()->getName() }} on {{ @reply->getDate() }}:<br>
+                    {{ @reply->getText() }}
+                </div>
+            </repeat>
+        </true>
+        <false>
+            <h1>Post not found</h1>
+        </false>
+    </check>
 </div>
+</body>
+</html>
