@@ -131,8 +131,7 @@ h1,h5{
 }
 .form {
     margin-left:10px;
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
+    border-radius: 10px 0px 0px 10px;
 
 }
 
