@@ -1,9 +1,9 @@
 
 body{
-     margin-top:20px;
-     background:#eee;
      color: #708090;
      height: 500px;
+     background-color: rgb(237, 237, 233);
+
      }
 #body {
     height: 300px;
@@ -14,13 +14,13 @@ body{
     font-size: 24px !important;
 }
 a{
-    text-decoration:none;
+    text-decoration:white;
 }
 .text-primary, a.text-primary:focus, a.text-primary:hover {
     color: #00ADBB!important;
 }
-.text-black, .text-hover-black:hover {
-    color: #000 !important;
+.text-black, .text-hover-blue:hover {
+    color: #f6f5f5 !important;
 }
 .font-weight-bold {
     font-weight: 700 !important;
@@ -41,15 +41,35 @@ container {
 #navbarSupportedContent {
     margin-right: 40px;
 
+
+}
+.navbar {
+    background-color: rgb(45, 49, 66);
+}
+
+navbar navbar-expand-lg {
+    background-color: rgb(45, 49, 66);
+}
+.navbar navbar-expand-lg {
+    background-color: rgb(45, 49, 66);
+}
+.navbar-brand h3{
+    color: white;
+}
+
+a.nav-link {
+    color: #eeeeee;
 }
 
 .nav-item {
     margin-left:15px;
     margin-right:15px;
+    text-decoration-color: #eeeeee;
 }
-hr.newhr {
-    border-top: 3px dashed black;
+hr{
+   opacity:0.60;
 }
+
 .break {
     word-break: break-word;
 }
@@ -67,10 +87,24 @@ hr.newhr {
 .active {
     margin-left: 10px;
     text-align: center;
+    color: black;
 }
 
 .stats {
     margin-left:10px;
+    color: black;
+
+}
+h1,h5{
+    color: black;
+
+}
+
+.btn-primary {
+    background-color: rgb(0, 173, 187);
+}
+.bi-star-fill {
+    color: rgb(0, 173, 187);
 
 }
 
@@ -81,8 +115,35 @@ hr.newhr {
     }
 }
 
+@media (max-width: 990px) {
+    .col-8 {
+        width: 100%;
+    }
+    .navbar-brand h3{
+        margin-left: 10px;
+    }
+}
 .active-heading-container,
 .stats-heading-container {
     background-color: #f2f2f2;
     text-align: center;
+}
+
+.report-link {
+    color: #ff0000; /* Set the color to red */
+    font-weight: bold; /* Make the text bold */
+    text-decoration: none; /* Remove underline */
+}
+
+.report-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+
+.star {
+    color: blue;
+}
+
+.star.clicked {
+    color: gold;
 }

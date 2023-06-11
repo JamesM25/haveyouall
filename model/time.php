@@ -24,3 +24,4 @@ class Time
         return date('M d, Y g:ia', strtotime($time));
     }
 }
+

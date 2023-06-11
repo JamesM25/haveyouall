@@ -17,14 +17,14 @@ $f3 = Base::instance();
 $con = new Controller($f3);
 $data = new DataLayer();
 
-// TODO: The current icon is a placeholder. We should find something better eventually.
 const ICON_PATH = 'images/mbox-icon.png';
 
 const STYLESHEETS = [
-    "styles/style.css",
+
     "https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css",
     "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
-    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css",
+    "styles/style.css"
 ];
 
 const SCRIPTS = [
