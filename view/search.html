@@ -6,14 +6,14 @@
             <form method="get" action="{{ @BASE }}/search">
                 <input type="hidden" name="query" value="{{ @userSearch }}">
                 <input type="hidden" name="page" value="{{ @userPage - 1 }}">
-                <button <check if="{{ @userPage <= 1}}">disabled</check> class="btn btn-success">Last Page</button>
+                <button <check if="{{ @userPage <= 1}}">disabled</check> class="btn btn-primary">Last Page</button>
             </form>
         </div>
         <div class="d-inline-block">
             <form method="get" action="{{ @BASE }}/search">
                 <input type="hidden" name="query" value="{{ @userSearch }}">
                 <input type="hidden" name="page" value="{{ @userPage + 1 }}">
-                <button <check if="{{ @userPage >= @searchPageCount}}">disabled</check> class="btn btn-success">Next Page</button>
+                <button <check if="{{ @userPage >= @searchPageCount}}">disabled</check> class="btn btn-primary">Next Page</button>
             </form>
         </div>
     </div>
@@ -21,5 +21,6 @@
     <repeat group="{{ @searchResults }}" key=" {{ @id }}" value="{{ @post }}">
         <include href="view/post_template.html">
     </repeat>
+
 
 </div>
