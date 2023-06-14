@@ -67,7 +67,7 @@ class Controller
         $this->_f3->set("SESSION.category", $category);
         $this->_f3->set("SESSION.filter", $filter);
 
-        $this->_f3->set("posts", $GLOBALS['data']->getRecentPosts($category));
+        $this->_f3->set("posts", $GLOBALS['data']->getRecentPosts($category, $filter));
         $this->_f3->set("stats", $GLOBALS['data']->getStats());
         $this->_f3->set("activeTopics", $GLOBALS['data']->getActiveTopics());
         $this->render("view/home.html");

@@ -18,9 +18,9 @@
                 <div class="col-lg-6 text-lg-right">
                         <div class="dropdown">
                             <select class="form-select form-select-lg w-100" aria-label=".form-select-lg example" onchange="window.location.href = '{{ @BASE }}?filter=' + this.value;">
-                                <option value="" {{ empty(@SESSION.filter) ? 'selected' : '' }}>Filter by (Date):</option>
-                                <repeat group="{{ FILTER_TYPES }}" value="{{ @type }}">
-                                    <option value="{{ @type }}" {{ @SESSION.filter == @type ? 'selected' : '' }}>{{ ucfirst(@type) }}</option>
+                                <option value="Date" {{ empty(@SESSION.filter) ? 'selected' : '' }}>Filter by (Date):</option>
+                                <repeat group="{{ FILTER_TYPES }}" key="{{ @key }}" value="{{ @value }}">
+                                    <option value="{{ @key }}" {{ @SESSION.filter == @key ? 'selected' : '' }}>{{ ucfirst(@key) }}</option>
                                 </repeat>
                             </select>
                         </div>

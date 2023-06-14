@@ -34,9 +34,9 @@ const SCRIPTS = [
 ];
 
 const FILTER_TYPES = [
-    "votes",
-    "replies",
-    "views"
+    "votes"=>"Votes",
+    "replies"=>"Replies",
+    "views"=>"Posts.Views"
 ];
 
 $f3->set('favicon', ICON_PATH);

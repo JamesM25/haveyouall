@@ -246,10 +246,15 @@ class DataLayer
 
     /**
      * This method returns an array of the most recent posts, containing no more than 50 elements.
+     * @param string $category
+     * @param string $filterBy
      * @return array
      */
-    function getRecentPosts($category = "")
+    function getRecentPosts($category = "", $filterBy = "")
     {
+        // ORDER BY cannot use parameters https://stackoverflow.com/a/2543144
+        $orderBy = FILTER_TYPES[$filterBy] ?? "Posts.Date";
+
         // TODO: Sort rows according to the "filter by" dropdown
         $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes
             FROM Posts
@@ -257,7 +262,7 @@ class DataLayer
             LEFT JOIN Votes ON Votes.Post=Posts.ID
             WHERE Categories LIKE :categories
             GROUP BY Posts.ID
-            ORDER BY Posts.Date DESC
+            ORDER BY $orderBy DESC
             LIMIT 50";
 
         $stmt = $this->_dbh->prepare($sql);
