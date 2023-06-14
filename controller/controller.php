@@ -58,7 +58,7 @@ class Controller
             $this->_f3->set("SESSION.category", $category);
         }
 
-        $filter = $this->_f3->get("SESSION.filter") ?? FILTER_TYPES[0];
+        $filter = $this->_f3->get("SESSION.filter") ?? "";
         if (isset($_GET["filter"])) {
             $filter = $_GET["filter"];
             $this->_f3->set("SESSION.filter", $filter);

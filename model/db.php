@@ -255,7 +255,6 @@ class DataLayer
         // ORDER BY cannot use parameters https://stackoverflow.com/a/2543144
         $orderBy = FILTER_TYPES[$filterBy] ?? "Posts.Date";
 
-        // TODO: Sort rows according to the "filter by" dropdown
         $sql = "SELECT Posts.*, COUNT(Replies.ID) AS Replies, COUNT(Votes.User) AS Votes
             FROM Posts
             LEFT JOIN Replies ON Replies.Thread=Posts.ID
