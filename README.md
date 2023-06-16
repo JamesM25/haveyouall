@@ -1,6 +1,6 @@
 
-# Project: Terminators
-# Team: HaveYouAll
+# Project: HaveYouAll
+# Team: Terminators
 By: James M. -- Michael O.
 
 This application is a simple forum website for the topic of games. We have a homepage where users are able to 
