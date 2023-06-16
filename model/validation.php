@@ -84,6 +84,7 @@ class Validation
     }
 
     /**
+     * Checks whether the user is logged in
      * @return bool True if the user is logged into an account, otherwise false
      */
     static function isLoggedIn()
@@ -92,6 +93,7 @@ class Validation
     }
 
     /**
+     * Checks whether the user is logged into an account with administrator permissions
      * @return bool True if the user is logged in and has administrator permissions, otherwise false
      */
     static function isAdmin()

@@ -196,6 +196,11 @@ class Controller
         $this->render("view/post_form.html");
     }
 
+    /**
+     * Renders the form to report a post
+     * @param $id int ID of the post being reported
+     * @return void
+     */
     function reportPost($id)
     {
         if (!Validation::isLoggedIn()) {

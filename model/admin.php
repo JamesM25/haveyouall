@@ -6,7 +6,7 @@
 class Admin extends User
 {
     /**
-     * Removes a post (NYI)
+     * Removes a post
      * @param $postId int
      * @return void
      */

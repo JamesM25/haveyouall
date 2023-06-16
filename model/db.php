@@ -153,8 +153,9 @@ class DataLayer
     }
 
     /**
-     * @param $postId int A post ID
-     * @param $reply Reply
+     * Adds a reply to the database
+     * @param $postId int ID of the post being replied to
+     * @param $reply Reply The reply
      * @return void
      */
     function createReply($postId, $reply)
@@ -189,11 +190,12 @@ class DataLayer
     }
 
     /**
-     * @return array The 50 most recent reports
+     * Retrieves all user reports from the database
+     * @return array Array of user reports
      */
     function getReports()
     {
-        $sql = "SELECT * FROM Reports ORDER BY Date DESC LIMIT 50";
+        $sql = "SELECT * FROM Reports ORDER BY Date DESC";
 
         $stmt = $this->_dbh->prepare($sql);
 
@@ -233,7 +235,7 @@ class DataLayer
 
     /**
      * Removes a post.
-     * @param $id int A post ID
+     * @param $id int ID of the post being removed
      * @return void
      */
     function removePost($id)
@@ -280,7 +282,8 @@ class DataLayer
     }
 
     /**
-     * @param $postId int
+     * Retrieves all replies on a post with the given ID
+     * @param $postId int ID of a post
      * @return array Array of replies
      */
     function getReplies($postId)
@@ -305,6 +308,8 @@ class DataLayer
     }
 
     /**
+     * Retrieves the current website stats, including the number of topics, total posts (topics + replies), members,
+     * and the name of the newest member
      * @return Stats
      */
     function getStats()
@@ -361,8 +366,9 @@ class DataLayer
     }
 
     /**
+     * Returns the total number of posts that match the given query
      * @param $query string A search query
-     * @return int Total number of posts that match the given query
+     * @return int
      */
     function getSearchResultCount($query)
     {
