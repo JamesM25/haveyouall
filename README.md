@@ -47,3 +47,6 @@ standards to keep everything in check and legible / understandable for developer
 We were able to accomplish validation through PHP for our forms and login. We applied this as we learned validation in
 class and it all seems to work well. Code is commented well but there may still be some slight changes.
 Additionally, account passwords are hashed to improve security.
+
+### Class Diagram
+![UML Diagram](diagram.png)
